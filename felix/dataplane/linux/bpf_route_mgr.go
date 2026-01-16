@@ -339,11 +339,7 @@ func (m *bpfRouteManager) calculateRoute(cidr ip.CIDR) routes.ValueInterface {
 		}
 		nodeIP := net.ParseIP(cgRoute.DstNodeIp)
 		route = m.bpfOps.NewValueWithNextHop(flags, ip.FromNetIP(nodeIP))
-	} else if rts&proto.RouteType_LOCAL_WORKLOAD == proto.RouteType_LOCAL_WORKLOAD && !cgRoute.Borrowed /* not ours */ {
-		if !cgRoute.LocalWorkload {
-			// Just the local IPAM block, not an actual workload.
-			return nil
-		}
+	} else if cgRoute.GetLocalWorkload() {
 		if wepIDs, ok := m.cidrToWEPIDs[cidr]; ok {
 			bestWepScore := -1
 			var bestWepID *proto.WorkloadEndpointID
@@ -409,7 +405,9 @@ func (m *bpfRouteManager) calculateRoute(cidr ip.CIDR) routes.ValueInterface {
 		}
 		nodeIP := net.ParseIP(cgRoute.DstNodeIp)
 		route = m.bpfOps.NewValueWithNextHop(flags, ip.FromNetIP(nodeIP))
-	}
+	} else if rts&proto.RouteType_LOCAL_WORKLOAD == proto.RouteType_LOCAL_WORKLOAD {
+        return nil
+    }
 
 	if route == nil && flags != 0 {
 		route = m.bpfOps.NewValue(flags)
