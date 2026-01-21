@@ -6,8 +6,6 @@ echo "Version is ${RELEASE_VERSION}"
 IMAGE_NAME='calico/node'
 IMAGE_WITH_VERSION=$IMAGE_NAME:$RELEASE_VERSION
 
-# ls -la ../felix/bpf-gpl
-
 make clean
 
 MAKE_RESULT="$(cd $BUILD_DIR && make image)"
