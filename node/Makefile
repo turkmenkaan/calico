@@ -303,7 +303,11 @@ WHAT=$(shell $(DOCKER_GO_BUILD) sh -c 'go run ../hack/test/spider -commit-range=
 else
 # By default, run all tests.
 WHAT=$(shell find . -name "*_test.go" | xargs dirname | sort -u)
+# WHAT=$(shell find . -name "*bpf_ep_mgr_test.go")
+# $(info    WHAT is $(WHAT))
 endif
+
+# $(shell echo "Running tests $(WHAT)")
 
 ## Run the ginkgo tests.
 ut fv: $(LIBBPF_A) run-k8s-apiserver

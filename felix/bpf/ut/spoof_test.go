@@ -104,6 +104,20 @@ func TestWorkloadSpoof(t *testing.T) {
 	Expect(err).NotTo(HaveOccurred())
 	runSpoofTest(t, resTC_ACT_SHOT)
 	cleanUpMaps()
+
+    t.Log("Missing return route & allowed sources -> ALLOW")
+	err = allowSourcesMap.Update(allowSourcesKey, allowsources.DummyValue)
+	Expect(err).NotTo(HaveOccurred())
+    runSpoofTest(t, resTC_ACT_UNSPEC)
+    cleanUpMaps()
+
+    t.Log("Correct return route & allowed source -> ALLOW")
+    err = allowSourcesMap.Update(allowSourcesKey, allowsources.DummyValue)
+    Expect(err).NotTo(HaveOccurred())
+    err = rtMap.Update(rtKeySrc, rtValGood)
+	Expect(err).NotTo(HaveOccurred())
+    runSpoofTest(t, resTC_ACT_UNSPEC)
+    cleanUpMaps()
 }
 
 func runSpoofTest(t *testing.T, expRC int, opts ...testOption) {
