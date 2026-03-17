@@ -147,9 +147,19 @@ func releaseSubCommands(cfg *Config) []*cli.Command {
 					calico.WithPublishGitTag(c.Bool(publishGitTagFlag.Name)),
 					calico.WithPublishGithubRelease(c.Bool(publishGitHubReleaseFlag.Name)),
 					calico.WithGithubToken(c.String(githubTokenFlag.Name)),
+					calico.WithPublishCharts(c.Bool(publishChartsFlag.Name)),
 				}
 				if reg := c.StringSlice(registryFlag.Name); len(reg) > 0 {
 					opts = append(opts, calico.WithImageRegistries(reg))
+				}
+				if reg := c.StringSlice(helmRegistryFlag.Name); len(reg) > 0 {
+					opts = append(opts, calico.WithHelmRegistries(reg))
+				}
+				if v := c.String(awsProfileFlag.Name); v != "" {
+					opts = append(opts, calico.WithAWSProfile(v))
+				}
+				if v := c.String(s3BucketFlag.Name); v != "" {
+					opts = append(opts, calico.WithS3Bucket(v))
 				}
 				r := calico.NewManager(opts...)
 				return r.PublishRelease()
@@ -172,9 +182,6 @@ func releasePublicSubCommands(cfg *Config) *cli.Command {
 			orgFlag,
 			repoFlag,
 			repoRemoteFlag,
-			operatorOrgFlag,
-			operatorRepoFlag,
-			operatorRepoRemoteFlag,
 		},
 		Action: func(_ context.Context, c *cli.Command) error {
 			configureLogging("release-public.log")
@@ -197,9 +204,6 @@ func releasePublicSubCommands(cfg *Config) *cli.Command {
 			opOpts := []operator.Option{
 				operator.WithVersion(operatorVer.FormattedString()),
 				operator.WithCalicoDirectory(cfg.RepoRootDir),
-				operator.WithGithubOrg(c.String(operatorOrgFlag.Name)),
-				operator.WithRepoName(c.String(operatorRepoFlag.Name)),
-				operator.WithRepoRemote(c.String(operatorRepoRemoteFlag.Name)),
 			}
 			o := operator.NewManager(opOpts...)
 			return o.ReleasePublic()
@@ -223,10 +227,14 @@ func releaseBuildFlags() []cli.Flag {
 func releasePublishFlags() []cli.Flag {
 	f := append(productFlags,
 		registryFlag,
+		helmRegistryFlag,
 		publishImagesFlag,
 		publishGitTagFlag,
 		publishGitHubReleaseFlag,
 		githubTokenFlag,
+		publishChartsFlag,
+		awsProfileFlag,
+		s3BucketFlag,
 		skipValidationFlag)
 	return f
 }

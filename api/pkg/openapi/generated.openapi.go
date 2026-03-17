@@ -18,17 +18,23 @@ import (
 
 func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenAPIDefinition {
 	return map[string]common.OpenAPIDefinition{
+		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.AllocationAttribute":                schema_pkg_apis_projectcalico_v3_AllocationAttribute(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.AutoHostEndpointConfig":             schema_pkg_apis_projectcalico_v3_AutoHostEndpointConfig(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPConfiguration":                   schema_pkg_apis_projectcalico_v3_BGPConfiguration(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPConfigurationList":               schema_pkg_apis_projectcalico_v3_BGPConfigurationList(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPConfigurationSpec":               schema_pkg_apis_projectcalico_v3_BGPConfigurationSpec(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPDaemonStatus":                    schema_pkg_apis_projectcalico_v3_BGPDaemonStatus(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilter":                          schema_pkg_apis_projectcalico_v3_BGPFilter(ref),
+		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterAddCommunity":              schema_pkg_apis_projectcalico_v3_BGPFilterAddCommunity(ref),
+		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterCommunityMatch":            schema_pkg_apis_projectcalico_v3_BGPFilterCommunityMatch(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterList":                      schema_pkg_apis_projectcalico_v3_BGPFilterList(ref),
+		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterOperation":                 schema_pkg_apis_projectcalico_v3_BGPFilterOperation(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterPrefixLengthV4":            schema_pkg_apis_projectcalico_v3_BGPFilterPrefixLengthV4(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterPrefixLengthV6":            schema_pkg_apis_projectcalico_v3_BGPFilterPrefixLengthV6(ref),
+		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterPrependASPath":             schema_pkg_apis_projectcalico_v3_BGPFilterPrependASPath(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterRuleV4":                    schema_pkg_apis_projectcalico_v3_BGPFilterRuleV4(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterRuleV6":                    schema_pkg_apis_projectcalico_v3_BGPFilterRuleV6(ref),
+		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterSetPriority":               schema_pkg_apis_projectcalico_v3_BGPFilterSetPriority(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterSpec":                      schema_pkg_apis_projectcalico_v3_BGPFilterSpec(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPPassword":                        schema_pkg_apis_projectcalico_v3_BGPPassword(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPPeer":                            schema_pkg_apis_projectcalico_v3_BGPPeer(ref),
@@ -71,13 +77,20 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.HostEndpointList":                   schema_pkg_apis_projectcalico_v3_HostEndpointList(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.HostEndpointSpec":                   schema_pkg_apis_projectcalico_v3_HostEndpointSpec(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.ICMPFields":                         schema_pkg_apis_projectcalico_v3_ICMPFields(ref),
+		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPAMBlock":                          schema_pkg_apis_projectcalico_v3_IPAMBlock(ref),
+		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPAMBlockList":                      schema_pkg_apis_projectcalico_v3_IPAMBlockList(ref),
+		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPAMBlockSpec":                      schema_pkg_apis_projectcalico_v3_IPAMBlockSpec(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPAMConfiguration":                  schema_pkg_apis_projectcalico_v3_IPAMConfiguration(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPAMConfigurationList":              schema_pkg_apis_projectcalico_v3_IPAMConfigurationList(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPAMConfigurationSpec":              schema_pkg_apis_projectcalico_v3_IPAMConfigurationSpec(ref),
+		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPAMHandle":                         schema_pkg_apis_projectcalico_v3_IPAMHandle(ref),
+		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPAMHandleList":                     schema_pkg_apis_projectcalico_v3_IPAMHandleList(ref),
+		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPAMHandleSpec":                     schema_pkg_apis_projectcalico_v3_IPAMHandleSpec(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPIPConfiguration":                  schema_pkg_apis_projectcalico_v3_IPIPConfiguration(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPPool":                             schema_pkg_apis_projectcalico_v3_IPPool(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPPoolList":                         schema_pkg_apis_projectcalico_v3_IPPoolList(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPPoolSpec":                         schema_pkg_apis_projectcalico_v3_IPPoolSpec(ref),
+		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPPoolStatus":                       schema_pkg_apis_projectcalico_v3_IPPoolStatus(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPReservation":                      schema_pkg_apis_projectcalico_v3_IPReservation(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPReservationList":                  schema_pkg_apis_projectcalico_v3_IPReservationList(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPReservationSpec":                  schema_pkg_apis_projectcalico_v3_IPReservationSpec(ref),
@@ -124,6 +137,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.Tier":                               schema_pkg_apis_projectcalico_v3_Tier(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.TierList":                           schema_pkg_apis_projectcalico_v3_TierList(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.TierSpec":                           schema_pkg_apis_projectcalico_v3_TierSpec(ref),
+		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.TierStatus":                         schema_pkg_apis_projectcalico_v3_TierStatus(ref),
 		"github.com/projectcalico/api/pkg/apis/projectcalico/v3.WorkloadEndpointControllerConfig":   schema_pkg_apis_projectcalico_v3_WorkloadEndpointControllerConfig(ref),
 		"github.com/projectcalico/api/pkg/lib/numorstring.DSCP":                                     schema_api_pkg_lib_numorstring_DSCP(ref),
 		"github.com/projectcalico/api/pkg/lib/numorstring.Port":                                     schema_api_pkg_lib_numorstring_Port(ref),
@@ -457,6 +471,54 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 	}
 }
 
+func schema_pkg_apis_projectcalico_v3_AllocationAttribute(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"handle_id": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
+						},
+					},
+					"secondary": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"object"},
+							AdditionalProperties: &spec.SchemaOrBool{
+								Allows: true,
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: "",
+										Type:    []string{"string"},
+										Format:  "",
+									},
+								},
+							},
+						},
+					},
+					"alternate": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"object"},
+							AdditionalProperties: &spec.SchemaOrBool{
+								Allows: true,
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: "",
+										Type:    []string{"string"},
+										Format:  "",
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+}
+
 func schema_pkg_apis_projectcalico_v3_AutoHostEndpointConfig(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -465,7 +527,7 @@ func schema_pkg_apis_projectcalico_v3_AutoHostEndpointConfig(ref common.Referenc
 				Properties: map[string]spec.Schema{
 					"autoCreate": {
 						SchemaProps: spec.SchemaProps{
-							Description: "AutoCreate enables automatic creation of host endpoints for every node. [Default: Disabled]",
+							Description: "AutoCreate enables automatic creation of host endpoints for every node. [Default: Disabled] Valid values are: \"Enabled\", \"Disabled\".",
 							Type:        []string{"string"},
 							Format:      "",
 						},
@@ -531,6 +593,7 @@ func schema_pkg_apis_projectcalico_v3_BGPConfiguration(ref common.ReferenceCallb
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
@@ -579,7 +642,7 @@ func schema_pkg_apis_projectcalico_v3_BGPConfigurationList(ref common.ReferenceC
 						},
 					},
 				},
-				Required: []string{"items"},
+				Required: []string{"metadata", "items"},
 			},
 		},
 		Dependencies: []string{
@@ -596,7 +659,7 @@ func schema_pkg_apis_projectcalico_v3_BGPConfigurationSpec(ref common.ReferenceC
 				Properties: map[string]spec.Schema{
 					"logSeverityScreen": {
 						SchemaProps: spec.SchemaProps{
-							Description: "LogSeverityScreen is the log severity above which logs are sent to the stdout. [Default: INFO]",
+							Description: "LogSeverityScreen is the log severity above which logs are sent to the stdout. [Default: Info]",
 							Type:        []string{"string"},
 							Format:      "",
 						},
@@ -616,6 +679,11 @@ func schema_pkg_apis_projectcalico_v3_BGPConfigurationSpec(ref common.ReferenceC
 						},
 					},
 					"serviceLoadBalancerIPs": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "ServiceLoadBalancerIPs are the CIDR blocks for Kubernetes Service LoadBalancer IPs. Kubernetes Service status.LoadBalancer.Ingress IPs will only be advertised if they are within one of these blocks.",
 							Type:        []string{"array"},
@@ -630,6 +698,11 @@ func schema_pkg_apis_projectcalico_v3_BGPConfigurationSpec(ref common.ReferenceC
 						},
 					},
 					"serviceExternalIPs": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "ServiceExternalIPs are the CIDR blocks for Kubernetes Service External IPs. Kubernetes Service ExternalIPs will only be advertised if they are within one of these blocks.",
 							Type:        []string{"array"},
@@ -644,6 +717,11 @@ func schema_pkg_apis_projectcalico_v3_BGPConfigurationSpec(ref common.ReferenceC
 						},
 					},
 					"serviceClusterIPs": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "ServiceClusterIPs are the CIDR blocks from which service cluster IPs are allocated. If specified, Calico will advertise these blocks, as well as any cluster IPs within them.",
 							Type:        []string{"array"},
@@ -665,6 +743,11 @@ func schema_pkg_apis_projectcalico_v3_BGPConfigurationSpec(ref common.ReferenceC
 						},
 					},
 					"communities": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "Communities is a list of BGP community values and their arbitrary names for tagging routes.",
 							Type:        []string{"array"},
@@ -679,6 +762,11 @@ func schema_pkg_apis_projectcalico_v3_BGPConfigurationSpec(ref common.ReferenceC
 						},
 					},
 					"prefixAdvertisements": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "PrefixAdvertisements contains per-prefix advertisement configuration.",
 							Type:        []string{"array"},
@@ -719,6 +807,11 @@ func schema_pkg_apis_projectcalico_v3_BGPConfigurationSpec(ref common.ReferenceC
 						},
 					},
 					"ignoredInterfaces": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "IgnoredInterfaces indicates the network interfaces that needs to be excluded when reading device routes.",
 							Type:        []string{"array"},
@@ -745,6 +838,27 @@ func schema_pkg_apis_projectcalico_v3_BGPConfigurationSpec(ref common.ReferenceC
 							Description: "The virtual IPv6 address of the node with which its local workload is expected to peer. It is recommended to use a link-local address.",
 							Type:        []string{"string"},
 							Format:      "",
+						},
+					},
+					"programClusterRoutes": {
+						SchemaProps: spec.SchemaProps{
+							Description: "ProgramClusterRoutes controls how a cluster node gets a route to a workload on another node, when that workload's IP comes from an IP Pool with vxlanMode: Never. When ProgramClusterRoutes is Enabled, confd and BIRD program that route. When ProgramClusterRoutes is Disabled, it is expected that Felix will program that route. Felix always programs such routes for IP Pools with vxlanMode: Always or vxlanMode: CrossSubnet. [Default: Enabled]",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"ipv4NormalRoutePriority": {
+						SchemaProps: spec.SchemaProps{
+							Description: "IPv4NormalRoutePriority is the normal route priority (metric) that Felix uses for IPv4 workload routes. This must match the value configured in FelixConfiguration. BIRD uses this to identify elevated-priority routes during live migration and to override local workload routes with higher-priority BGP-learned routes. [Default: 1024]",
+							Type:        []string{"integer"},
+							Format:      "int32",
+						},
+					},
+					"ipv6NormalRoutePriority": {
+						SchemaProps: spec.SchemaProps{
+							Description: "IPv6NormalRoutePriority is the normal route priority (metric) that Felix uses for IPv6 workload routes. This must match the value configured in FelixConfiguration. BIRD uses this to identify elevated-priority routes during live migration and to override local workload routes with higher-priority BGP-learned routes. [Default: 1024]",
+							Type:        []string{"integer"},
+							Format:      "int32",
 						},
 					},
 				},
@@ -836,10 +950,71 @@ func schema_pkg_apis_projectcalico_v3_BGPFilter(ref common.ReferenceCallback) co
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
 			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterSpec", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
+	}
+}
+
+func schema_pkg_apis_projectcalico_v3_BGPFilterAddCommunity(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "BGPFilterAddCommunity specifies a BGP community to add to a route.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"value": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Value is the BGP community to add.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+				},
+				Required: []string{"value"},
+			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-map-type": "atomic",
+				},
+			},
+		},
+	}
+}
+
+func schema_pkg_apis_projectcalico_v3_BGPFilterCommunityMatch(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "BGPFilterCommunityMatch specifies community-based match criteria for a BGP filter rule. Currently only a single community value is supported.  A MatchOperator field may be introduced in the future to support anyOf/allOf semantics with multiple values.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"values": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Values is a list of BGP community values to match against.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: "",
+										Type:    []string{"string"},
+										Format:  "",
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"values"},
+			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-map-type": "atomic",
+				},
+			},
+		},
 	}
 }
 
@@ -884,11 +1059,49 @@ func schema_pkg_apis_projectcalico_v3_BGPFilterList(ref common.ReferenceCallback
 						},
 					},
 				},
-				Required: []string{"items"},
+				Required: []string{"metadata", "items"},
 			},
 		},
 		Dependencies: []string{
 			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilter", "k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"},
+	}
+}
+
+func schema_pkg_apis_projectcalico_v3_BGPFilterOperation(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "BGPFilterOperation is a discriminated union representing a single route modification. Exactly one field must be set.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"addCommunity": {
+						SchemaProps: spec.SchemaProps{
+							Description: "AddCommunity adds the specified BGP community to the route.",
+							Ref:         ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterAddCommunity"),
+						},
+					},
+					"prependASPath": {
+						SchemaProps: spec.SchemaProps{
+							Description: "PrependASPath prepends the specified AS numbers to the route's AS path.",
+							Ref:         ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterPrependASPath"),
+						},
+					},
+					"setPriority": {
+						SchemaProps: spec.SchemaProps{
+							Description: "SetPriority sets the route's priority (metric), in the same units as the ...RoutePriority fields in FelixConfiguration.",
+							Ref:         ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterSetPriority"),
+						},
+					},
+				},
+			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-map-type": "atomic",
+				},
+			},
+		},
+		Dependencies: []string{
+			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterAddCommunity", "github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterPrependASPath", "github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterSetPriority"},
 	}
 }
 
@@ -910,6 +1123,11 @@ func schema_pkg_apis_projectcalico_v3_BGPFilterPrefixLengthV4(ref common.Referen
 							Format: "int32",
 						},
 					},
+				},
+			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-map-type": "atomic",
 				},
 			},
 		},
@@ -936,6 +1154,45 @@ func schema_pkg_apis_projectcalico_v3_BGPFilterPrefixLengthV6(ref common.Referen
 					},
 				},
 			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-map-type": "atomic",
+				},
+			},
+		},
+	}
+}
+
+func schema_pkg_apis_projectcalico_v3_BGPFilterPrependASPath(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "BGPFilterPrependASPath specifies AS numbers to prepend to a route's AS path.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"prefix": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Prefix is the sequence of AS numbers to prepend to the route's AS path. The resulting path starts with these AS numbers in the order listed; e.g. [65000, 65001] produces the path \"65000 65001 <original>\".",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: 0,
+										Type:    []string{"integer"},
+										Format:  "int64",
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"prefix"},
+			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-map-type": "atomic",
+				},
+			},
 		},
 	}
 }
@@ -944,36 +1201,76 @@ func schema_pkg_apis_projectcalico_v3_BGPFilterRuleV4(ref common.ReferenceCallba
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
 			SchemaProps: spec.SchemaProps{
-				Description: "BGPFilterRuleV4 defines a BGP filter rule consisting a single IPv4 CIDR block and a filter action for this CIDR.",
+				Description: "BGPFilterRuleV4 defines a BGP filter rule consisting of match criteria, a terminal action, and optional operations to apply to matching routes.",
 				Type:        []string{"object"},
 				Properties: map[string]spec.Schema{
 					"cidr": {
 						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
+							Description: "If non-empty, this filter rule will only apply when the route being exported or imported \"matches\" the given CIDR - where the definition of \"matches\" is according to MatchOperator and PrefixLength.  CIDR should be in conventional CIDR notation, <prefix>/<length>.",
+							Type:        []string{"string"},
+							Format:      "",
 						},
 					},
 					"prefixLength": {
 						SchemaProps: spec.SchemaProps{
-							Ref: ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterPrefixLengthV4"),
+							Description: "PrefixLength further constrains the CIDR match by restricting the range of allowed prefix lengths.  For example, CIDR \"10.0.0.0/8\" with MatchOperator \"In\" and PrefixLength {min: 16, max: 24} matches any route within 10.0.0.0/8 whose prefix length is between /16 and /24.  Requires CIDR to be set; if CIDR is omitted, PrefixLength is ignored.  If PrefixLength is nil and CIDR is set, the CIDR's own prefix length is used as the minimum and /32 (for V4) as the maximum.",
+							Ref:         ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterPrefixLengthV4"),
 						},
 					},
 					"source": {
 						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
+							Description: "If set to \"RemotePeers\": for export rules, this filter rule will only apply to routes learned from BGP peers (i.e. re-advertised routes), not locally originated routes. For import rules, this field is redundant because imported routes are by definition from BGP peers.",
+							Type:        []string{"string"},
+							Format:      "",
 						},
 					},
 					"interface": {
 						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
+							Description: "If non-empty, this filter rule will only apply to routes with an outgoing interface that matches Interface.",
+							Type:        []string{"string"},
+							Format:      "",
 						},
 					},
 					"matchOperator": {
 						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
+							Description: "MatchOperator defines how the route's prefix is compared against CIDR.  \"Equal\" requires an exact prefix match, \"In\" requires the route to be contained within the CIDR (or equal), \"NotEqual\" and \"NotIn\" are their negations.  Only meaningful when CIDR is also specified. Required when CIDR is set.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"peerType": {
+						SchemaProps: spec.SchemaProps{
+							Description: "If non-empty, this filter rule will only apply to routes being imported from or exported to a BGP peer of the specified type.  If empty, the rule applies to all peers.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"communities": {
+						SchemaProps: spec.SchemaProps{
+							Description: "If set, this filter rule will only apply to routes that carry the specified BGP community.  On import, this matches communities set by the remote peer.  On export, this matches communities already present on the route, whether received from a BGP peer (e.g. on a route reflector re-advertising to an eBGP peer) or added locally by an import filter or an earlier export rule's AddCommunity operation.",
+							Ref:         ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterCommunityMatch"),
+						},
+					},
+					"asPathPrefix": {
+						SchemaProps: spec.SchemaProps{
+							Description: "If non-empty, this filter rule will only apply to routes whose AS path begins with the specified sequence of AS numbers.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: 0,
+										Type:    []string{"integer"},
+										Format:  "int64",
+									},
+								},
+							},
+						},
+					},
+					"priority": {
+						SchemaProps: spec.SchemaProps{
+							Description: "If set, this filter rule will only apply to routes with the given priority, in the same units as the ...RoutePriority fields in FelixConfiguration.",
+							Type:        []string{"integer"},
+							Format:      "int32",
 						},
 					},
 					"action": {
@@ -983,12 +1280,31 @@ func schema_pkg_apis_projectcalico_v3_BGPFilterRuleV4(ref common.ReferenceCallba
 							Format:  "",
 						},
 					},
+					"operations": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Operations is an ordered list of route modifications to apply to matching routes before accepting them.  Only valid when Action is \"Accept\"; specifying operations with \"Reject\" is rejected by validation.  Each entry must set exactly one operation field.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterOperation"),
+									},
+								},
+							},
+						},
+					},
 				},
 				Required: []string{"action"},
 			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-map-type": "atomic",
+				},
+			},
 		},
 		Dependencies: []string{
-			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterPrefixLengthV4"},
+			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterCommunityMatch", "github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterOperation", "github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterPrefixLengthV4"},
 	}
 }
 
@@ -996,36 +1312,76 @@ func schema_pkg_apis_projectcalico_v3_BGPFilterRuleV6(ref common.ReferenceCallba
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
 			SchemaProps: spec.SchemaProps{
-				Description: "BGPFilterRuleV6 defines a BGP filter rule consisting a single IPv6 CIDR block and a filter action for this CIDR.",
+				Description: "BGPFilterRuleV6 defines a BGP filter rule consisting of match criteria, a terminal action, and optional operations to apply to matching routes.",
 				Type:        []string{"object"},
 				Properties: map[string]spec.Schema{
 					"cidr": {
 						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
+							Description: "If non-empty, this filter rule will only apply when the route being exported or imported \"matches\" the given CIDR - where the definition of \"matches\" is according to MatchOperator and PrefixLength.  CIDR should be in conventional CIDR notation, <prefix>/<length>.",
+							Type:        []string{"string"},
+							Format:      "",
 						},
 					},
 					"prefixLength": {
 						SchemaProps: spec.SchemaProps{
-							Ref: ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterPrefixLengthV6"),
+							Description: "PrefixLength further constrains the CIDR match by restricting the range of allowed prefix lengths.  For example, CIDR \"fd00::/8\" with MatchOperator \"In\" and PrefixLength {min: 48, max: 64} matches any route within fd00::/8 whose prefix length is between /48 and /64.  Requires CIDR to be set; if CIDR is omitted, PrefixLength is ignored.  If PrefixLength is nil and CIDR is set, the CIDR's own prefix length is used as the minimum and /128 (for V6) as the maximum.",
+							Ref:         ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterPrefixLengthV6"),
 						},
 					},
 					"source": {
 						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
+							Description: "If set to \"RemotePeers\": for export rules, this filter rule will only apply to routes learned from BGP peers (i.e. re-advertised routes), not locally originated routes. For import rules, this field is redundant because imported routes are by definition from BGP peers.",
+							Type:        []string{"string"},
+							Format:      "",
 						},
 					},
 					"interface": {
 						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
+							Description: "If non-empty, this filter rule will only apply to routes with an outgoing interface that matches Interface.",
+							Type:        []string{"string"},
+							Format:      "",
 						},
 					},
 					"matchOperator": {
 						SchemaProps: spec.SchemaProps{
-							Type:   []string{"string"},
-							Format: "",
+							Description: "MatchOperator defines how the route's prefix is compared against CIDR.  \"Equal\" requires an exact prefix match, \"In\" requires the route to be contained within the CIDR (or equal), \"NotEqual\" and \"NotIn\" are their negations.  Only meaningful when CIDR is also specified. Required when CIDR is set.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"peerType": {
+						SchemaProps: spec.SchemaProps{
+							Description: "If non-empty, this filter rule will only apply to routes being imported from or exported to a BGP peer of the specified type.  If empty, the rule applies to all peers.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"communities": {
+						SchemaProps: spec.SchemaProps{
+							Description: "If set, this filter rule will only apply to routes that carry the specified BGP community.  On import, this matches communities set by the remote peer.  On export, this matches communities already present on the route, whether received from a BGP peer (e.g. on a route reflector re-advertising to an eBGP peer) or added locally by an import filter or an earlier export rule's AddCommunity operation.",
+							Ref:         ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterCommunityMatch"),
+						},
+					},
+					"asPathPrefix": {
+						SchemaProps: spec.SchemaProps{
+							Description: "If non-empty, this filter rule will only apply to routes whose AS path begins with the specified sequence of AS numbers.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: 0,
+										Type:    []string{"integer"},
+										Format:  "int64",
+									},
+								},
+							},
+						},
+					},
+					"priority": {
+						SchemaProps: spec.SchemaProps{
+							Description: "If set, this filter rule will only apply to routes with the given priority, in the same units as the ...RoutePriority fields in FelixConfiguration.",
+							Type:        []string{"integer"},
+							Format:      "int32",
 						},
 					},
 					"action": {
@@ -1035,12 +1391,57 @@ func schema_pkg_apis_projectcalico_v3_BGPFilterRuleV6(ref common.ReferenceCallba
 							Format:  "",
 						},
 					},
+					"operations": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Operations is an ordered list of route modifications to apply to matching routes before accepting them.  Only valid when Action is \"Accept\"; specifying operations with \"Reject\" is rejected by validation.  Each entry must set exactly one operation field.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterOperation"),
+									},
+								},
+							},
+						},
+					},
 				},
 				Required: []string{"action"},
 			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-map-type": "atomic",
+				},
+			},
 		},
 		Dependencies: []string{
-			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterPrefixLengthV6"},
+			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterCommunityMatch", "github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterOperation", "github.com/projectcalico/api/pkg/apis/projectcalico/v3.BGPFilterPrefixLengthV6"},
+	}
+}
+
+func schema_pkg_apis_projectcalico_v3_BGPFilterSetPriority(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "BGPFilterSetPriority specifies a route priority to set.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"value": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Value is the priority to set, in the same units as FelixConfiguration's ...RoutePriority fields.",
+							Type:        []string{"integer"},
+							Format:      "int32",
+						},
+					},
+				},
+				Required: []string{"value"},
+			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-map-type": "atomic",
+				},
+			},
+		},
 	}
 }
 
@@ -1169,6 +1570,7 @@ func schema_pkg_apis_projectcalico_v3_BGPPeer(ref common.ReferenceCallback) comm
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
@@ -1217,7 +1619,7 @@ func schema_pkg_apis_projectcalico_v3_BGPPeerList(ref common.ReferenceCallback) 
 						},
 					},
 				},
-				Required: []string{"items"},
+				Required: []string{"metadata", "items"},
 			},
 		},
 		Dependencies: []string{
@@ -1462,19 +1864,18 @@ func schema_pkg_apis_projectcalico_v3_BlockAffinity(ref common.ReferenceCallback
 					},
 					"metadata": {
 						SchemaProps: spec.SchemaProps{
-							Description: "Standard object's metadata.",
-							Default:     map[string]interface{}{},
-							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
+							Default: map[string]interface{}{},
+							Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
 						},
 					},
 					"spec": {
 						SchemaProps: spec.SchemaProps{
-							Description: "Specification of the BlockAffinity.",
-							Default:     map[string]interface{}{},
-							Ref:         ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.BlockAffinitySpec"),
+							Default: map[string]interface{}{},
+							Ref:     ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.BlockAffinitySpec"),
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
@@ -1554,6 +1955,13 @@ func schema_pkg_apis_projectcalico_v3_BlockAffinitySpec(ref common.ReferenceCall
 							Format:      "",
 						},
 					},
+					"type": {
+						SchemaProps: spec.SchemaProps{
+							Description: "The type of affinity.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
 					"cidr": {
 						SchemaProps: spec.SchemaProps{
 							Description: "The CIDR range this block affinity references.",
@@ -1565,12 +1973,13 @@ func schema_pkg_apis_projectcalico_v3_BlockAffinitySpec(ref common.ReferenceCall
 					"deleted": {
 						SchemaProps: spec.SchemaProps{
 							Description: "Deleted indicates whether or not this block affinity is disabled and is used as part of race-condition prevention. When set to true, clients should treat this block as if it does not exist.",
+							Default:     false,
 							Type:        []string{"boolean"},
 							Format:      "",
 						},
 					},
 				},
-				Required: []string{"state", "node", "cidr"},
+				Required: []string{"state", "node", "cidr", "deleted"},
 			},
 		},
 	}
@@ -1881,6 +2290,7 @@ func schema_pkg_apis_projectcalico_v3_CalicoNodeStatus(ref common.ReferenceCallb
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
@@ -1929,7 +2339,7 @@ func schema_pkg_apis_projectcalico_v3_CalicoNodeStatusList(ref common.ReferenceC
 						},
 					},
 				},
-				Required: []string{"items"},
+				Required: []string{"metadata", "items"},
 			},
 		},
 		Dependencies: []string{
@@ -2054,6 +2464,7 @@ func schema_pkg_apis_projectcalico_v3_ClusterInformation(ref common.ReferenceCal
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
@@ -2102,7 +2513,7 @@ func schema_pkg_apis_projectcalico_v3_ClusterInformationList(ref common.Referenc
 						},
 					},
 				},
-				Required: []string{"items"},
+				Required: []string{"metadata", "items"},
 			},
 		},
 		Dependencies: []string{
@@ -2179,6 +2590,11 @@ func schema_pkg_apis_projectcalico_v3_Community(ref common.ReferenceCallback) co
 							Format:      "",
 						},
 					},
+				},
+			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-map-type": "atomic",
 				},
 			},
 		},
@@ -2284,6 +2700,11 @@ func schema_pkg_apis_projectcalico_v3_EntityRule(ref common.ReferenceCallback) c
 				Type:        []string{"object"},
 				Properties: map[string]spec.Schema{
 					"nets": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "Nets is an optional field that restricts the rule to only apply to traffic that originates from (or terminates at) IP addresses in any of the given subnets.",
 							Type:        []string{"array"},
@@ -2333,7 +2754,7 @@ func schema_pkg_apis_projectcalico_v3_EntityRule(ref common.ReferenceCallback) c
 					},
 					"notNets": {
 						SchemaProps: spec.SchemaProps{
-							Description: "NotNets is the negated version of the Nets field.",
+							Description: "NotNets is the negated version of the Nets field. listType=set",
 							Type:        []string{"array"},
 							Items: &spec.SchemaOrArray{
 								Schema: &spec.Schema{
@@ -2413,6 +2834,7 @@ func schema_pkg_apis_projectcalico_v3_FelixConfiguration(ref common.ReferenceCal
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
@@ -2461,7 +2883,7 @@ func schema_pkg_apis_projectcalico_v3_FelixConfigurationList(ref common.Referenc
 						},
 					},
 				},
-				Required: []string{"items"},
+				Required: []string{"metadata", "items"},
 			},
 		},
 		Dependencies: []string{
@@ -2651,7 +3073,7 @@ func schema_pkg_apis_projectcalico_v3_FelixConfigurationSpec(ref common.Referenc
 					},
 					"logPrefix": {
 						SchemaProps: spec.SchemaProps{
-							Description: "LogPrefix is the log prefix that Felix uses when rendering LOG rules. It is possible to use the following specifiers to include extra information in the log prefix. - %t: Tier name. - %k: Kind (short names). - %n: Policy or profile name. - %p: Policy or profile name (namespace/name for namespaced kinds or just name for non namespaced kinds). [Default: calico-packet]",
+							Description: "LogPrefix is the log prefix that Felix uses when rendering LOG rules. It is possible to use the following specifiers to include extra information in the log prefix. - %t: Tier name. - %k: Kind (short names). - %n: Policy or profile name. - %p: Policy or profile name (namespace/name for namespaced kinds or just name for non namespaced kinds). Calico includes \": \" characters at the end of the generated log prefix. Note that iptables shows up to 29 characters for the log prefix and nftables up to 127 characters. Extra characters are truncated. [Default: calico-packet]",
 							Type:        []string{"string"},
 							Format:      "",
 						},
@@ -3036,7 +3458,7 @@ func schema_pkg_apis_projectcalico_v3_FelixConfigurationSpec(ref common.Referenc
 					},
 					"programClusterRoutes": {
 						SchemaProps: spec.SchemaProps{
-							Description: "ProgramClusterRoutes specifies whether Felix should program IPIP routes instead of BIRD. Felix always programs VXLAN routes. [Default: Disabled]",
+							Description: "ProgramClusterRoutes controls how a cluster node gets a route to a workload on another node, when that workload's IP comes from an IP Pool with vxlanMode: Never. When ProgramClusterRoutes is Disabled, it is expected that confd and BIRD will program that route. When ProgramClusterRoutes is Enabled, Felix program that route. Felix always programs such routes for IP Pools with vxlanMode: Always or vxlanMode: CrossSubnet. [Default: Disabled]",
 							Type:        []string{"string"},
 							Format:      "",
 						},
@@ -3139,9 +3561,10 @@ func schema_pkg_apis_projectcalico_v3_FelixConfigurationSpec(ref common.Referenc
 					},
 					"nftablesMode": {
 						SchemaProps: spec.SchemaProps{
-							Description: "NFTablesMode configures nftables support in Felix. [Default: Disabled]",
+							Description: "NFTablesMode configures nftables support in Felix. [Default: Auto]\n\nPossible enum values:\n - `\"Auto\"`\n - `\"Disabled\"`\n - `\"Enabled\"`",
 							Type:        []string{"string"},
 							Format:      "",
+							Enum:        []interface{}{"Auto", "Disabled", "Enabled"},
 						},
 					},
 					"nftablesRefreshInterval": {
@@ -3329,7 +3752,7 @@ func schema_pkg_apis_projectcalico_v3_FelixConfigurationSpec(ref common.Referenc
 					},
 					"bpfKubeProxyHealthzPort": {
 						SchemaProps: spec.SchemaProps{
-							Description: "BPFKubeProxyHealthzPort, in BPF mode, controls the port that Felix's embedded kube-proxy health check server binds to. The health check server is used by external load balancers to determine if this node should receive traffic.  [Default: 10256]",
+							Description: "BPFKubeProxyHealthzPort, in BPF mode, controls the port that Felix's embedded kube-proxy health check server binds to. The health check server is used by external load balancers to determine if this node should receive traffic. Set to 0 to disable the health check server.  [Default: 10256]",
 							Type:        []string{"integer"},
 							Format:      "int32",
 						},
@@ -3475,6 +3898,19 @@ func schema_pkg_apis_projectcalico_v3_FelixConfigurationSpec(ref common.Referenc
 							Format:      "int32",
 						},
 					},
+					"istioAmbientMode": {
+						SchemaProps: spec.SchemaProps{
+							Description: "IstioAmbientMode configures Felix to work together with Tigera's Istio distribution. [Default: Disabled]",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"istioDSCPMark": {
+						SchemaProps: spec.SchemaProps{
+							Description: "IstioDSCPMark sets the value to use when directing traffic to Istio ZTunnel, when Istio is enabled. The mark is set only on SYN packets at the final hop to avoid interference with other protocols. This value is reserved by Calico and must not be used with other Istio installation. [Default: 23]",
+							Ref:         ref("github.com/projectcalico/api/pkg/lib/numorstring.DSCP"),
+						},
+					},
 					"cgroupV2Path": {
 						SchemaProps: spec.SchemaProps{
 							Description: "CgroupV2Path overrides the default location where to find the cgroup hierarchy.",
@@ -3569,6 +4005,40 @@ func schema_pkg_apis_projectcalico_v3_FelixConfigurationSpec(ref common.Referenc
 							Description: "RouteSyncDisabled will disable all operations performed on the route table. Set to true to run in network-policy mode only.",
 							Type:        []string{"boolean"},
 							Format:      "",
+						},
+					},
+					"ipv4NormalRoutePriority": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Route Priority value for a normal priority Calico-programmed IPv4 route.  Note, higher values mean lower priority. [Default: 1024]",
+							Type:        []string{"integer"},
+							Format:      "int32",
+						},
+					},
+					"ipv4ElevatedRoutePriority": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Route Priority value for an elevated priority Calico-programmed IPv4 route.  Note, higher values mean lower priority.  Elevated priority is used during VM live migration, and for optimal behaviour IPv4ElevatedRoutePriority must be less than IPv4NormalRoutePriority [Default: 512]",
+							Type:        []string{"integer"},
+							Format:      "int32",
+						},
+					},
+					"ipv6NormalRoutePriority": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Route Priority value for a normal priority Calico-programmed IPv6 route.  Note, higher values mean lower priority. [Default: 1024]",
+							Type:        []string{"integer"},
+							Format:      "int32",
+						},
+					},
+					"ipv6ElevatedRoutePriority": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Route Priority value for an elevated priority Calico-programmed IPv6 route.  Note, higher values mean lower priority.  Elevated priority is used during VM live migration, and for optimal behaviour IPv6ElevatedRoutePriority must be less than IPv6NormalRoutePriority [Default: 512]",
+							Type:        []string{"integer"},
+							Format:      "int32",
+						},
+					},
+					"liveMigrationRouteConvergenceTime": {
+						SchemaProps: spec.SchemaProps{
+							Description: "LiveMigrationRouteConvergenceTime is the time to keep elevated route priority after a VM live migration completes.  This allows routes to converge across the cluster before reverting to normal priority. [Default: 30s]",
+							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Duration"),
 						},
 					},
 					"wireguardEnabled": {
@@ -3742,7 +4212,7 @@ func schema_pkg_apis_projectcalico_v3_FelixConfigurationSpec(ref common.Referenc
 			},
 		},
 		Dependencies: []string{
-			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BPFConntrackTimeouts", "github.com/projectcalico/api/pkg/apis/projectcalico/v3.HealthTimeoutOverride", "github.com/projectcalico/api/pkg/apis/projectcalico/v3.ProtoPort", "github.com/projectcalico/api/pkg/apis/projectcalico/v3.RouteTableIDRange", "github.com/projectcalico/api/pkg/apis/projectcalico/v3.RouteTableRange", "github.com/projectcalico/api/pkg/lib/numorstring.Port", "k8s.io/apimachinery/pkg/apis/meta/v1.Duration"},
+			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.BPFConntrackTimeouts", "github.com/projectcalico/api/pkg/apis/projectcalico/v3.HealthTimeoutOverride", "github.com/projectcalico/api/pkg/apis/projectcalico/v3.ProtoPort", "github.com/projectcalico/api/pkg/apis/projectcalico/v3.RouteTableIDRange", "github.com/projectcalico/api/pkg/apis/projectcalico/v3.RouteTableRange", "github.com/projectcalico/api/pkg/lib/numorstring.DSCP", "github.com/projectcalico/api/pkg/lib/numorstring.Port", "k8s.io/apimachinery/pkg/apis/meta/v1.Duration"},
 	}
 }
 
@@ -3779,6 +4249,7 @@ func schema_pkg_apis_projectcalico_v3_GlobalNetworkPolicy(ref common.ReferenceCa
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
@@ -3827,7 +4298,7 @@ func schema_pkg_apis_projectcalico_v3_GlobalNetworkPolicyList(ref common.Referen
 						},
 					},
 				},
-				Required: []string{"items"},
+				Required: []string{"metadata", "items"},
 			},
 		},
 		Dependencies: []string{
@@ -3891,6 +4362,11 @@ func schema_pkg_apis_projectcalico_v3_GlobalNetworkPolicySpec(ref common.Referen
 						},
 					},
 					"types": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "Types indicates whether this policy applies to ingress, or to egress, or to both.  When not explicitly specified (and so the value on creation is empty or nil), Calico defaults Types according to what Ingress and Egress rules are present in the policy.  The default is:\n\n- [ PolicyTypeIngress ], if there are no Egress rules (including the case where there are\n  also no Ingress rules)\n\n- [ PolicyTypeEgress ], if there are Egress rules but no Ingress rules\n\n- [ PolicyTypeIngress, PolicyTypeEgress ], if there are both Ingress and Egress rules.\n\nWhen the policy is read back again, Types will always be one of these values, never empty or nil.",
 							Type:        []string{"array"},
@@ -3996,6 +4472,7 @@ func schema_pkg_apis_projectcalico_v3_GlobalNetworkSet(ref common.ReferenceCallb
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
@@ -4044,7 +4521,7 @@ func schema_pkg_apis_projectcalico_v3_GlobalNetworkSetList(ref common.ReferenceC
 						},
 					},
 				},
-				Required: []string{"items"},
+				Required: []string{"metadata", "items"},
 			},
 		},
 		Dependencies: []string{
@@ -4060,6 +4537,11 @@ func schema_pkg_apis_projectcalico_v3_GlobalNetworkSetSpec(ref common.ReferenceC
 				Type:        []string{"object"},
 				Properties: map[string]spec.Schema{
 					"nets": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "The list of IP networks that belong to this set.",
 							Type:        []string{"array"},
@@ -4209,6 +4691,7 @@ func schema_pkg_apis_projectcalico_v3_HostEndpoint(ref common.ReferenceCallback)
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
@@ -4257,7 +4740,7 @@ func schema_pkg_apis_projectcalico_v3_HostEndpointList(ref common.ReferenceCallb
 						},
 					},
 				},
-				Required: []string{"items"},
+				Required: []string{"metadata", "items"},
 			},
 		},
 		Dependencies: []string{
@@ -4287,6 +4770,11 @@ func schema_pkg_apis_projectcalico_v3_HostEndpointSpec(ref common.ReferenceCallb
 						},
 					},
 					"expectedIPs": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "The expected IP addresses (IPv4 and IPv6) of the endpoint. If \"InterfaceName\" is not present, Calico will look for an interface matching any of the IPs in the list and apply policy to that. Note:\n\tWhen using the selector match criteria in an ingress or egress security Policy\n\tor Profile, Calico converts the selector into a set of IP addresses. For host\n\tendpoints, the ExpectedIPs field is used for that purpose. (If only the interface\n\tname is specified, Calico does not learn the IPs of the interface for use in match\n\tcriteria.)",
 							Type:        []string{"array"},
@@ -4302,6 +4790,11 @@ func schema_pkg_apis_projectcalico_v3_HostEndpointSpec(ref common.ReferenceCallb
 						},
 					},
 					"profiles": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "A list of identifiers of security Profile objects that apply to this endpoint. Each profile is applied in the order that they appear in this list.  Profile rules are applied after the selector-based security policy.",
 							Type:        []string{"array"},
@@ -4365,6 +4858,216 @@ func schema_pkg_apis_projectcalico_v3_ICMPFields(ref common.ReferenceCallback) c
 	}
 }
 
+func schema_pkg_apis_projectcalico_v3_IPAMBlock(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Default: map[string]interface{}{},
+							Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
+						},
+					},
+					"spec": {
+						SchemaProps: spec.SchemaProps{
+							Default: map[string]interface{}{},
+							Ref:     ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPAMBlockSpec"),
+						},
+					},
+				},
+				Required: []string{"metadata", "spec"},
+			},
+		},
+		Dependencies: []string{
+			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPAMBlockSpec", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
+	}
+}
+
+func schema_pkg_apis_projectcalico_v3_IPAMBlockList(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "IPAMBlockList contains a list of IPAMBlock resources.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Default: map[string]interface{}{},
+							Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"),
+						},
+					},
+					"items": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPAMBlock"),
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"metadata", "items"},
+			},
+		},
+		Dependencies: []string{
+			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPAMBlock", "k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"},
+	}
+}
+
+func schema_pkg_apis_projectcalico_v3_IPAMBlockSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "IPAMBlockSpec contains the specification for an IPAMBlock resource.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"cidr": {
+						SchemaProps: spec.SchemaProps{
+							Description: "The block's CIDR.",
+							Default:     "",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"affinity": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Affinity of the block, if this block has one. If set, it will be of the form \"host:<hostname>\" or \"virtual:<hostname>\". If not set, this block is not affine to a host.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"affinityClaimTime": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Time at which affinity was claimed.",
+							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.Time"),
+						},
+					},
+					"allocations": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Array of allocations in-use within this block. nil entries mean the allocation is free. For non-nil entries at index i, the index is the ordinal of the allocation within this block and the value is the index of the associated attributes in the Attributes array.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Type:   []string{"integer"},
+										Format: "int32",
+									},
+								},
+							},
+						},
+					},
+					"unallocated": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Unallocated is an ordered list of allocations which are free in the block.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: 0,
+										Type:    []string{"integer"},
+										Format:  "int32",
+									},
+								},
+							},
+						},
+					},
+					"attributes": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Attributes is an array of arbitrary metadata associated with allocations in the block. To find attributes for a given allocation, use the value of the allocation's entry in the Allocations array as the index of the element in this array.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.AllocationAttribute"),
+									},
+								},
+							},
+						},
+					},
+					"sequenceNumber": {
+						SchemaProps: spec.SchemaProps{
+							Description: "We store a sequence number that is updated each time the block is written. Each allocation will also store the sequence number of the block at the time of its creation. When releasing an IP, passing the sequence number associated with the allocation allows us to protect against a race condition and ensure the IP hasn't been released and re-allocated since the release request.",
+							Default:     0,
+							Type:        []string{"integer"},
+							Format:      "int64",
+						},
+					},
+					"sequenceNumberForAllocation": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Map of allocated ordinal within the block to sequence number of the block at the time of allocation. Kubernetes does not allow numerical keys for maps, so the key is cast to a string.",
+							Type:        []string{"object"},
+							AdditionalProperties: &spec.SchemaOrBool{
+								Allows: true,
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: 0,
+										Type:    []string{"integer"},
+										Format:  "int64",
+									},
+								},
+							},
+						},
+					},
+					"deleted": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Deleted is an internal boolean used to workaround a limitation in the Kubernetes API whereby deletion will not return a conflict error if the block has been updated. It should not be set manually.",
+							Default:     false,
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+					"strictAffinity": {
+						SchemaProps: spec.SchemaProps{
+							Description: "StrictAffinity on the IPAMBlock is deprecated and no longer used by the code. Use IPAMConfig StrictAffinity instead.",
+							Default:     false,
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+				},
+				Required: []string{"cidr", "allocations", "unallocated", "attributes", "strictAffinity"},
+			},
+		},
+		Dependencies: []string{
+			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.AllocationAttribute", "k8s.io/apimachinery/pkg/apis/meta/v1.Time"},
+	}
+}
+
 func schema_pkg_apis_projectcalico_v3_IPAMConfiguration(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -4399,6 +5102,7 @@ func schema_pkg_apis_projectcalico_v3_IPAMConfiguration(ref common.ReferenceCall
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
@@ -4447,7 +5151,7 @@ func schema_pkg_apis_projectcalico_v3_IPAMConfigurationList(ref common.Reference
 						},
 					},
 				},
-				Required: []string{"items"},
+				Required: []string{"metadata", "items"},
 			},
 		},
 		Dependencies: []string{
@@ -4459,7 +5163,7 @@ func schema_pkg_apis_projectcalico_v3_IPAMConfigurationSpec(ref common.Reference
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
 			SchemaProps: spec.SchemaProps{
-				Description: "IPAMConfigurationSpec contains the specification for an IPPool resource.",
+				Description: "IPAMConfigurationSpec contains the specification for an IPAMConfiguration resource.",
 				Type:        []string{"object"},
 				Properties: map[string]spec.Schema{
 					"strictAffinity": {
@@ -4477,8 +5181,156 @@ func schema_pkg_apis_projectcalico_v3_IPAMConfigurationSpec(ref common.Reference
 							Format:      "int32",
 						},
 					},
+					"autoAllocateBlocks": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Whether or not to auto allocate blocks to hosts.",
+							Default:     false,
+							Type:        []string{"boolean"},
+							Format:      "",
+						},
+					},
+					"kubeVirtVMAddressPersistence": {
+						SchemaProps: spec.SchemaProps{
+							Description: "KubeVirtVMAddressPersistence controls whether KubeVirt VirtualMachine workloads maintain persistent IP addresses across VM lifecycle events (reboot, migration, pod eviction). When Enabled, Calico automatically ensures that KubeVirt VMs retain their IP addresses when their underlying pods are recreated during VM operations. When Disabled, VMs receive new IP addresses whenever their pods are recreated, and creating a live migration target pod is not supported because the migration target pod requires the same IP as the source pod, which is only possible with address persistence. Defaults to Enabled if not specified.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
 				},
-				Required: []string{"strictAffinity"},
+				Required: []string{"strictAffinity", "autoAllocateBlocks"},
+			},
+		},
+	}
+}
+
+func schema_pkg_apis_projectcalico_v3_IPAMHandle(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Default: map[string]interface{}{},
+							Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
+						},
+					},
+					"spec": {
+						SchemaProps: spec.SchemaProps{
+							Default: map[string]interface{}{},
+							Ref:     ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPAMHandleSpec"),
+						},
+					},
+				},
+				Required: []string{"metadata", "spec"},
+			},
+		},
+		Dependencies: []string{
+			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPAMHandleSpec", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
+	}
+}
+
+func schema_pkg_apis_projectcalico_v3_IPAMHandleList(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "IPAMHandleList contains a list of IPAMHandle resources.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"kind": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"apiVersion": {
+						SchemaProps: spec.SchemaProps{
+							Description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
+					"metadata": {
+						SchemaProps: spec.SchemaProps{
+							Default: map[string]interface{}{},
+							Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"),
+						},
+					},
+					"items": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPAMHandle"),
+									},
+								},
+							},
+						},
+					},
+				},
+				Required: []string{"metadata", "items"},
+			},
+		},
+		Dependencies: []string{
+			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPAMHandle", "k8s.io/apimachinery/pkg/apis/meta/v1.ListMeta"},
+	}
+}
+
+func schema_pkg_apis_projectcalico_v3_IPAMHandleSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "IPAMHandleSpec contains the specification for an IPAMHandle resource.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"handleID": {
+						SchemaProps: spec.SchemaProps{
+							Default: "",
+							Type:    []string{"string"},
+							Format:  "",
+						},
+					},
+					"block": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"object"},
+							AdditionalProperties: &spec.SchemaOrBool{
+								Allows: true,
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: 0,
+										Type:    []string{"integer"},
+										Format:  "int32",
+									},
+								},
+							},
+						},
+					},
+					"deleted": {
+						SchemaProps: spec.SchemaProps{
+							Default: false,
+							Type:    []string{"boolean"},
+							Format:  "",
+						},
+					},
+				},
+				Required: []string{"handleID", "block"},
 			},
 		},
 	}
@@ -4542,11 +5394,17 @@ func schema_pkg_apis_projectcalico_v3_IPPool(ref common.ReferenceCallback) commo
 							Ref:     ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPPoolSpec"),
 						},
 					},
+					"status": {
+						SchemaProps: spec.SchemaProps{
+							Ref: ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPPoolStatus"),
+						},
+					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
-			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPPoolSpec", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
+			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPPoolSpec", "github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPPoolStatus", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
 	}
 }
 
@@ -4591,7 +5449,7 @@ func schema_pkg_apis_projectcalico_v3_IPPoolList(ref common.ReferenceCallback) c
 						},
 					},
 				},
-				Required: []string{"items"},
+				Required: []string{"metadata", "items"},
 			},
 		},
 		Dependencies: []string{
@@ -4616,14 +5474,14 @@ func schema_pkg_apis_projectcalico_v3_IPPoolSpec(ref common.ReferenceCallback) c
 					},
 					"vxlanMode": {
 						SchemaProps: spec.SchemaProps{
-							Description: "Contains configuration for VXLAN tunneling for this pool. If not specified, then this is defaulted to \"Never\" (i.e. VXLAN tunneling is disabled).",
+							Description: "Contains configuration for VXLAN tunneling for this pool.",
 							Type:        []string{"string"},
 							Format:      "",
 						},
 					},
 					"ipipMode": {
 						SchemaProps: spec.SchemaProps{
-							Description: "Contains configuration for IPIP tunneling for this pool. If not specified, then this is defaulted to \"Never\" (i.e. IPIP tunneling is disabled).",
+							Description: "Contains configuration for IPIP tunneling for this pool. For IPv6 pools, IPIP tunneling must be disabled.",
 							Type:        []string{"string"},
 							Format:      "",
 						},
@@ -4651,7 +5509,7 @@ func schema_pkg_apis_projectcalico_v3_IPPoolSpec(ref common.ReferenceCallback) c
 					},
 					"blockSize": {
 						SchemaProps: spec.SchemaProps{
-							Description: "The block size to use for IP address assignments from this pool. Defaults to 26 for IPv4 and 122 for IPv6.",
+							Description: "The block size to use for IP address assignments from this pool. Defaults to 26 for IPv4 and 122 for IPv6. The block size must be between 0 and 32 for IPv4 and between 0 and 128 for IPv6. It must also be smaller than or equal to the size of the pool CIDR.",
 							Type:        []string{"integer"},
 							Format:      "int32",
 						},
@@ -4670,20 +5528,12 @@ func schema_pkg_apis_projectcalico_v3_IPPoolSpec(ref common.ReferenceCallback) c
 							Format:      "",
 						},
 					},
-					"ipip": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Deprecated: this field is only used for APIv1 backwards compatibility. Setting this field is not allowed, this field is for internal use only.",
-							Ref:         ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPIPConfiguration"),
-						},
-					},
-					"nat-outgoing": {
-						SchemaProps: spec.SchemaProps{
-							Description: "Deprecated: this field is only used for APIv1 backwards compatibility. Setting this field is not allowed, this field is for internal use only.",
-							Type:        []string{"boolean"},
-							Format:      "",
-						},
-					},
 					"allowedUses": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "AllowedUse controls what the IP pool will be used for.  If not specified or empty, defaults to [\"Tunnel\", \"Workload\"] for back-compatibility",
 							Type:        []string{"array"},
@@ -4709,8 +5559,33 @@ func schema_pkg_apis_projectcalico_v3_IPPoolSpec(ref common.ReferenceCallback) c
 				Required: []string{"cidr"},
 			},
 		},
+	}
+}
+
+func schema_pkg_apis_projectcalico_v3_IPPoolStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"conditions": {
+						SchemaProps: spec.SchemaProps{
+							Type: []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.Condition"),
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
 		Dependencies: []string{
-			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.IPIPConfiguration"},
+			"k8s.io/apimachinery/pkg/apis/meta/v1.Condition"},
 	}
 }
 
@@ -4748,6 +5623,7 @@ func schema_pkg_apis_projectcalico_v3_IPReservation(ref common.ReferenceCallback
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
@@ -4796,7 +5672,7 @@ func schema_pkg_apis_projectcalico_v3_IPReservationList(ref common.ReferenceCall
 						},
 					},
 				},
-				Required: []string{"items"},
+				Required: []string{"metadata", "items"},
 			},
 		},
 		Dependencies: []string{
@@ -4812,6 +5688,11 @@ func schema_pkg_apis_projectcalico_v3_IPReservationSpec(ref common.ReferenceCall
 				Type:        []string{"object"},
 				Properties: map[string]spec.Schema{
 					"reservedCIDRs": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "ReservedCIDRs is a list of CIDRs and/or IP addresses that Calico IPAM will exclude from new allocations.",
 							Type:        []string{"array"},
@@ -4871,6 +5752,7 @@ func schema_pkg_apis_projectcalico_v3_KubeControllersConfiguration(ref common.Re
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
@@ -4919,7 +5801,7 @@ func schema_pkg_apis_projectcalico_v3_KubeControllersConfigurationList(ref commo
 						},
 					},
 				},
-				Required: []string{"items"},
+				Required: []string{"metadata", "items"},
 			},
 		},
 		Dependencies: []string{
@@ -4936,14 +5818,14 @@ func schema_pkg_apis_projectcalico_v3_KubeControllersConfigurationSpec(ref commo
 				Properties: map[string]spec.Schema{
 					"logSeverityScreen": {
 						SchemaProps: spec.SchemaProps{
-							Description: "LogSeverityScreen is the log severity above which logs are sent to the stdout. [Default: Info]",
+							Description: "LogSeverityScreen is the log severity above which logs are sent to the stdout. [Default: Info] Valid values are: \"None\", \"Debug\", \"Info\", \"Warning\", \"Error\", \"Fatal\", \"Panic\".",
 							Type:        []string{"string"},
 							Format:      "",
 						},
 					},
 					"healthChecks": {
 						SchemaProps: spec.SchemaProps{
-							Description: "HealthChecks enables or disables support for health checks [Default: Enabled]",
+							Description: "HealthChecks enables or disables support for health checks [Default: Enabled] Valid values are: \"Enabled\", \"Disabled\".",
 							Type:        []string{"string"},
 							Format:      "",
 						},
@@ -4956,7 +5838,7 @@ func schema_pkg_apis_projectcalico_v3_KubeControllersConfigurationSpec(ref commo
 					},
 					"prometheusMetricsPort": {
 						SchemaProps: spec.SchemaProps{
-							Description: "PrometheusMetricsPort is the TCP port that the Prometheus metrics server should bind to. Set to 0 to disable. [Default: 9094]",
+							Description: "PrometheusMetricsPort is the TCP port that the Prometheus metrics server should bind to. Set to 0 to disable. [Default: 9094] Valid values are: 0-65535.",
 							Type:        []string{"integer"},
 							Format:      "int32",
 						},
@@ -4970,7 +5852,7 @@ func schema_pkg_apis_projectcalico_v3_KubeControllersConfigurationSpec(ref commo
 					},
 					"debugProfilePort": {
 						SchemaProps: spec.SchemaProps{
-							Description: "DebugProfilePort configures the port to serve memory and cpu profiles on. If not specified, profiling is disabled.",
+							Description: "DebugProfilePort configures the port to serve memory and cpu profiles on. If not specified, profiling is disabled. Valid values are: 0-65535.",
 							Type:        []string{"integer"},
 							Format:      "int32",
 						},
@@ -4994,7 +5876,6 @@ func schema_pkg_apis_projectcalico_v3_KubeControllersConfigurationStatus(ref com
 					"runningConfig": {
 						SchemaProps: spec.SchemaProps{
 							Description: "RunningConfig contains the effective config that is running in the kube-controllers pod, after merging the API resource with any environment variables.",
-							Default:     map[string]interface{}{},
 							Ref:         ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.KubeControllersConfigurationSpec"),
 						},
 					},
@@ -5114,6 +5995,7 @@ func schema_pkg_apis_projectcalico_v3_NetworkPolicy(ref common.ReferenceCallback
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
@@ -5162,7 +6044,7 @@ func schema_pkg_apis_projectcalico_v3_NetworkPolicyList(ref common.ReferenceCall
 						},
 					},
 				},
-				Required: []string{"items"},
+				Required: []string{"metadata", "items"},
 			},
 		},
 		Dependencies: []string{
@@ -5226,6 +6108,11 @@ func schema_pkg_apis_projectcalico_v3_NetworkPolicySpec(ref common.ReferenceCall
 						},
 					},
 					"types": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "Types indicates whether this policy applies to ingress, or to egress, or to both.  When not explicitly specified (and so the value on creation is empty or nil), Calico defaults Types according to what Ingress and Egress are present in the policy.  The default is:\n\n- [ PolicyTypeIngress ], if there are no Egress rules (including the case where there are\n  also no Ingress rules)\n\n- [ PolicyTypeEgress ], if there are Egress rules but no Ingress rules\n\n- [ PolicyTypeIngress, PolicyTypeEgress ], if there are both Ingress and Egress rules.\n\nWhen the policy is read back again, Types will always be one of these values, never empty or nil.",
 							Type:        []string{"array"},
@@ -5303,6 +6190,7 @@ func schema_pkg_apis_projectcalico_v3_NetworkSet(ref common.ReferenceCallback) c
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
@@ -5351,7 +6239,7 @@ func schema_pkg_apis_projectcalico_v3_NetworkSetList(ref common.ReferenceCallbac
 						},
 					},
 				},
-				Required: []string{"items"},
+				Required: []string{"metadata", "items"},
 			},
 		},
 		Dependencies: []string{
@@ -5367,6 +6255,11 @@ func schema_pkg_apis_projectcalico_v3_NetworkSetSpec(ref common.ReferenceCallbac
 				Type:        []string{"object"},
 				Properties: map[string]spec.Schema{
 					"nets": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "The list of IP networks that belong to this set.",
 							Type:        []string{"array"},
@@ -5402,7 +6295,7 @@ func schema_pkg_apis_projectcalico_v3_NodeControllerConfig(ref common.ReferenceC
 					},
 					"syncLabels": {
 						SchemaProps: spec.SchemaProps{
-							Description: "SyncLabels controls whether to copy Kubernetes node labels to Calico nodes. [Default: Enabled]",
+							Description: "SyncLabels controls whether to copy Kubernetes node labels to Calico nodes. [Default: Enabled] Valid values are: \"Enabled\", \"Disabled\".",
 							Type:        []string{"string"},
 							Format:      "",
 						},
@@ -5479,6 +6372,11 @@ func schema_pkg_apis_projectcalico_v3_PrefixAdvertisement(ref common.ReferenceCa
 					},
 				},
 			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-map-type": "atomic",
+				},
+			},
 		},
 	}
 }
@@ -5516,6 +6414,7 @@ func schema_pkg_apis_projectcalico_v3_Profile(ref common.ReferenceCallback) comm
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
@@ -5564,7 +6463,7 @@ func schema_pkg_apis_projectcalico_v3_ProfileList(ref common.ReferenceCallback) 
 						},
 					},
 				},
-				Required: []string{"items"},
+				Required: []string{"metadata", "items"},
 			},
 		},
 		Dependencies: []string{
@@ -5854,6 +6753,11 @@ func schema_pkg_apis_projectcalico_v3_ServiceAccountMatch(ref common.ReferenceCa
 				Type: []string{"object"},
 				Properties: map[string]spec.Schema{
 					"names": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "Names is an optional field that restricts the rule to only apply to traffic that originates from (or terminates at) a pod running as a service account whose name is in the list.",
 							Type:        []string{"array"},
@@ -5896,6 +6800,11 @@ func schema_pkg_apis_projectcalico_v3_ServiceClusterIPBlock(ref common.Reference
 					},
 				},
 			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-map-type": "atomic",
+				},
+			},
 		},
 	}
 }
@@ -5915,6 +6824,11 @@ func schema_pkg_apis_projectcalico_v3_ServiceExternalIPBlock(ref common.Referenc
 					},
 				},
 			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-map-type": "atomic",
+				},
+			},
 		},
 	}
 }
@@ -5932,6 +6846,11 @@ func schema_pkg_apis_projectcalico_v3_ServiceLoadBalancerIPBlock(ref common.Refe
 							Format: "",
 						},
 					},
+				},
+			},
+			VendorExtensible: spec.VendorExtensible{
+				Extensions: spec.Extensions{
+					"x-kubernetes-map-type": "atomic",
 				},
 			},
 		},
@@ -5987,19 +6906,18 @@ func schema_pkg_apis_projectcalico_v3_StagedGlobalNetworkPolicy(ref common.Refer
 					},
 					"metadata": {
 						SchemaProps: spec.SchemaProps{
-							Description: "Standard object's metadata.",
-							Default:     map[string]interface{}{},
-							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
+							Default: map[string]interface{}{},
+							Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
 						},
 					},
 					"spec": {
 						SchemaProps: spec.SchemaProps{
-							Description: "Specification of the Policy.",
-							Default:     map[string]interface{}{},
-							Ref:         ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.StagedGlobalNetworkPolicySpec"),
+							Default: map[string]interface{}{},
+							Ref:     ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.StagedGlobalNetworkPolicySpec"),
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
@@ -6119,6 +7037,11 @@ func schema_pkg_apis_projectcalico_v3_StagedGlobalNetworkPolicySpec(ref common.R
 						},
 					},
 					"types": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "Types indicates whether this policy applies to ingress, or to egress, or to both.  When not explicitly specified (and so the value on creation is empty or nil), Calico defaults Types according to what Ingress and Egress rules are present in the policy.  The default is:\n\n- [ PolicyTypeIngress ], if there are no Egress rules (including the case where there are\n  also no Ingress rules)\n\n- [ PolicyTypeEgress ], if there are Egress rules but no Ingress rules\n\n- [ PolicyTypeIngress, PolicyTypeEgress ], if there are both Ingress and Egress rules.\n\nWhen the policy is read back again, Types will always be one of these values, never empty or nil.",
 							Type:        []string{"array"},
@@ -6214,19 +7137,18 @@ func schema_pkg_apis_projectcalico_v3_StagedKubernetesNetworkPolicy(ref common.R
 					},
 					"metadata": {
 						SchemaProps: spec.SchemaProps{
-							Description: "Standard object's metadata.",
-							Default:     map[string]interface{}{},
-							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
+							Default: map[string]interface{}{},
+							Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
 						},
 					},
 					"spec": {
 						SchemaProps: spec.SchemaProps{
-							Description: "Specification of the Policy.",
-							Default:     map[string]interface{}{},
-							Ref:         ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.StagedKubernetesNetworkPolicySpec"),
+							Default: map[string]interface{}{},
+							Ref:     ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.StagedKubernetesNetworkPolicySpec"),
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
@@ -6332,6 +7254,11 @@ func schema_pkg_apis_projectcalico_v3_StagedKubernetesNetworkPolicySpec(ref comm
 						},
 					},
 					"policyTypes": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "List of rule types that the NetworkPolicy relates to. Valid options are Ingress, Egress, or Ingress,Egress. If this field is not specified, it will default based on the existence of Ingress or Egress rules; policies that contain an Egress section are assumed to affect Egress, and all policies (whether or not they contain an Ingress section) are assumed to affect Ingress. If you want to write an egress-only policy, you must explicitly specify policyTypes [ \"Egress\" ]. Likewise, if you want to write a policy that specifies that no egress is allowed, you must specify a policyTypes value that include \"Egress\" (since such a policy would not include an Egress section and would otherwise default to just [ \"Ingress\" ]). This field is beta-level in 1.8",
 							Type:        []string{"array"},
@@ -6378,19 +7305,18 @@ func schema_pkg_apis_projectcalico_v3_StagedNetworkPolicy(ref common.ReferenceCa
 					},
 					"metadata": {
 						SchemaProps: spec.SchemaProps{
-							Description: "Standard object's metadata.",
-							Default:     map[string]interface{}{},
-							Ref:         ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
+							Default: map[string]interface{}{},
+							Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"),
 						},
 					},
 					"spec": {
 						SchemaProps: spec.SchemaProps{
-							Description: "Specification of the Policy.",
-							Default:     map[string]interface{}{},
-							Ref:         ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.StagedNetworkPolicySpec"),
+							Default: map[string]interface{}{},
+							Ref:     ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.StagedNetworkPolicySpec"),
 						},
 					},
 				},
+				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
@@ -6510,6 +7436,11 @@ func schema_pkg_apis_projectcalico_v3_StagedNetworkPolicySpec(ref common.Referen
 						},
 					},
 					"types": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "Types indicates whether this policy applies to ingress, or to egress, or to both.  When not explicitly specified (and so the value on creation is empty or nil), Calico defaults Types according to what Ingress and Egress are present in the policy.  The default is:\n\n- [ PolicyTypeIngress ], if there are no Egress rules (including the case where there are\n  also no Ingress rules)\n\n- [ PolicyTypeEgress ], if there are Egress rules but no Ingress rules\n\n- [ PolicyTypeIngress, PolicyTypeEgress ], if there are both Ingress and Egress rules.\n\nWhen the policy is read back again, Types will always be one of these values, never empty or nil.",
 							Type:        []string{"array"},
@@ -6568,6 +7499,11 @@ func schema_pkg_apis_projectcalico_v3_Template(ref common.ReferenceCallback) com
 						},
 					},
 					"interfaceCIDRs": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "set",
+							},
+						},
 						SchemaProps: spec.SchemaProps{
 							Description: "InterfaceCIDRs contains a list of CIDRs used for matching nodeIPs to the AutoHostEndpoint. If specified, only addresses within these CIDRs will be included in the expected IPs. At least one of InterfaceCIDRs and InterfacePattern must be specified.",
 							Type:        []string{"array"},
@@ -6651,12 +7587,18 @@ func schema_pkg_apis_projectcalico_v3_Tier(ref common.ReferenceCallback) common.
 							Ref:     ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.TierSpec"),
 						},
 					},
+					"status": {
+						SchemaProps: spec.SchemaProps{
+							Default: map[string]interface{}{},
+							Ref:     ref("github.com/projectcalico/api/pkg/apis/projectcalico/v3.TierStatus"),
+						},
+					},
 				},
 				Required: []string{"metadata", "spec"},
 			},
 		},
 		Dependencies: []string{
-			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.TierSpec", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
+			"github.com/projectcalico/api/pkg/apis/projectcalico/v3.TierSpec", "github.com/projectcalico/api/pkg/apis/projectcalico/v3.TierStatus", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
 	}
 }
 
@@ -6733,6 +7675,35 @@ func schema_pkg_apis_projectcalico_v3_TierSpec(ref common.ReferenceCallback) com
 				},
 			},
 		},
+	}
+}
+
+func schema_pkg_apis_projectcalico_v3_TierStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "TierStatus contains the status of a Tier resource.",
+				Type:        []string{"object"},
+				Properties: map[string]spec.Schema{
+					"conditions": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Conditions represents the latest observed set of conditions for the resource. A tier with a \"Ready\" condition set to \"True\" is operating as expected.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("k8s.io/apimachinery/pkg/apis/meta/v1.Condition"),
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		Dependencies: []string{
+			"k8s.io/apimachinery/pkg/apis/meta/v1.Condition"},
 	}
 }
 

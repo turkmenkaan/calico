@@ -21,12 +21,13 @@ import (
 	"errors"
 	"fmt"
 	"hash/fnv"
+	maps0 "maps"
 	"net"
 	"regexp"
 	"strconv"
 	"sync"
 
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	v3 "github.com/projectcalico/api/pkg/apis/projectcalico/v3"
 	log "github.com/sirupsen/logrus"
@@ -478,7 +479,7 @@ var _ = Describe("BPF Endpoint Manager", func() {
 			VXLANPort:              4789,
 			VXLANVNI:               4096,
 		}
-		ruleRenderer = rules.NewRenderer(rrConfigNormal)
+		ruleRenderer = rules.NewRenderer(rrConfigNormal, false)
 		filterTableV4 = newMockTable("filter")
 		filterTableV6 = newMockTable("filter")
 	})
@@ -518,6 +519,8 @@ var _ = Describe("BPF Endpoint Manager", func() {
 			nil,
 			environment.NewFeatureDetector(nil).GetFeatures(),
 			1250,
+			nil,
+			nil,
 		)
 		Expect(err).NotTo(HaveOccurred())
 		bpfEpMgr.v4.hostIP = net.ParseIP("1.2.3.4")
@@ -548,7 +551,7 @@ var _ = Describe("BPF Endpoint Manager", func() {
 		}
 	}
 
-	genHEPUpdate := func(heps ...interface{}) func() {
+	genHEPUpdate := func(heps ...any) func() {
 		return func() {
 			hostIfaceToEp := make(map[string]*proto.HostEndpoint)
 			for i := 0; i < len(heps); i += 2 {
@@ -1792,13 +1795,13 @@ var _ = Describe("BPF Endpoint Manager", func() {
 
 	Describe("ifstate(ipv6 disabled)", func() {
 		It("should clean up jump map entries for missing interfaces", func() {
-			for i := 0; i < 9; i++ {
+			for i := range 9 {
 				_ = jumpMapIng.Update(jump.Key(i), jump.Value(uint32(1000+i)))
 				_ = jumpMapIng.Update(jump.Key(i+jump.TCMaxEntryPoints), jump.Value(uint32(1000+i)))
 				_ = jumpMapEgr.Update(jump.Key(i), jump.Value(uint32(1000+i)))
 				_ = jumpMapEgr.Update(jump.Key(i+jump.TCMaxEntryPoints), jump.Value(uint32(1000+i)))
 			}
-			for i := 0; i < 5; i++ {
+			for i := range 5 {
 				_ = xdpJumpMap.Update(jump.Key(i), jump.Value(uint32(2000+i)))
 			}
 
@@ -1865,7 +1868,7 @@ var _ = Describe("BPF Endpoint Manager", func() {
 			bpfEpMgr.bpfLogLevel = "debug"
 			bpfEpMgr.logFilters = map[string]string{"all": "tcp"}
 
-			for i := 0; i < 4; i++ {
+			for i := range 4 {
 				_ = jumpMapIng.Update(jump.Key(i), jump.Value(uint32(1000+i)))
 				_ = jumpMapIng.Update(jump.Key(i+jump.TCMaxEntryPoints), jump.Value(uint32(1000+i)))
 				_ = jumpMapEgr.Update(jump.Key(i), jump.Value(uint32(1000+i)))
@@ -2126,7 +2129,7 @@ var _ = Describe("BPF Endpoint Manager", func() {
 
 		It("check bpf endpoint count after pod churn", func() {
 			start := bpfEpMgr.getNumEPs()
-			for i := 0; i < 3; i++ {
+			for i := range 3 {
 				name := fmt.Sprintf("cali%d", i)
 				genIfaceUpdate(name, ifacemonitor.StateUp, 1000+i)()
 				genWLUpdate(name)()
@@ -2265,13 +2268,13 @@ var _ = Describe("BPF Endpoint Manager", func() {
 			bpfEpMgr.bpfLogLevel = "debug"
 			bpfEpMgr.logFilters = map[string]string{"all": "tcp"}
 
-			for i := 0; i < 13; i++ {
+			for i := range 13 {
 				_ = jumpMapIng.Update(jump.Key(i), jump.Value(uint32(1000+i)))
 				_ = jumpMapIng.Update(jump.Key(i+jump.TCMaxEntryPoints), jump.Value(uint32(1000+i)))
 				_ = jumpMapEgr.Update(jump.Key(i), jump.Value(uint32(1000+i)))
 				_ = jumpMapEgr.Update(jump.Key(i+jump.TCMaxEntryPoints), jump.Value(uint32(1000+i)))
 			}
-			for i := 0; i < 9; i++ {
+			for i := range 9 {
 				_ = xdpJumpMap.Update(jump.Key(i), jump.Value(uint32(2000+i)))
 			}
 
@@ -2338,7 +2341,7 @@ var _ = Describe("BPF Endpoint Manager", func() {
 			bpfEpMgr.bpfLogLevel = "debug"
 			bpfEpMgr.logFilters = map[string]string{"all": "tcp"}
 
-			for i := 0; i < 6; i++ {
+			for i := range 6 {
 				_ = jumpMapIng.Update(jump.Key(i), jump.Value(uint32(1000+i)))
 				_ = jumpMapIng.Update(jump.Key(i+jump.TCMaxEntryPoints), jump.Value(uint32(1000+i)))
 				_ = jumpMapEgr.Update(jump.Key(i), jump.Value(uint32(1000+i)))
@@ -2800,12 +2803,8 @@ var _ = Describe("BPF Endpoint Manager", func() {
 
 			jumpCopyContentsIngress := make(map[string]string, len(jumpMapIng.Contents))
 			jumpCopyContentsEgress := make(map[string]string, len(jumpMapEgr.Contents))
-			for k, v := range jumpMapIng.Contents {
-				jumpCopyContentsIngress[k] = v
-			}
-			for k, v := range jumpMapEgr.Contents {
-				jumpCopyContentsEgress[k] = v
-			}
+			maps0.Copy(jumpCopyContentsIngress, jumpMapIng.Contents)
+			maps0.Copy(jumpCopyContentsEgress, jumpMapEgr.Contents)
 
 			genPolicy("default", "anotherpolicy")()
 			genWLUpdate("cali12345", &proto.PolicyID{Name: "anotherpolicy", Kind: v3.KindNetworkPolicy})()
@@ -2837,12 +2836,8 @@ var _ = Describe("BPF Endpoint Manager", func() {
 
 			jumpCopyContentsIngress = make(map[string]string, len(jumpMapIng.Contents))
 			jumpCopyContentsEgress = make(map[string]string, len(jumpMapEgr.Contents))
-			for k, v := range jumpMapIng.Contents {
-				jumpCopyContentsIngress[k] = v
-			}
-			for k, v := range jumpMapEgr.Contents {
-				jumpCopyContentsEgress[k] = v
-			}
+			maps0.Copy(jumpCopyContentsIngress, jumpMapIng.Contents)
+			maps0.Copy(jumpCopyContentsEgress, jumpMapEgr.Contents)
 
 			dp = newMockDataplane()
 			mockDP = &mockProgMapDP{
@@ -2904,7 +2899,6 @@ var _ = Describe("BPF Endpoint Manager", func() {
 		JustBeforeEach(func() {
 			ifaceName = "cali12345"
 			cidrString = "192.192.192.192/32"
-
 			newBpfEpMgr(false)
 			genIfaceUpdate("cali12345", ifacemonitor.StateUp, 15)()
 			genWLUpdateWithSpoofedSource("cali12345", []string{cidrString})()
@@ -2916,7 +2910,6 @@ var _ = Describe("BPF Endpoint Manager", func() {
 
 		It("should contain allowed source prefixes from annotation", func() {
 			// initial genWLUpdate should add the prefix to the map
-
 			ifindex := bpfEpMgr.nameToIface[ifaceName].info.ifIndex
 			expectedEbpfEntry := allowsources.NewKey(cidr, ifindex)
 			_, err := bpfEpMgr.v4.AllowSourcesMap.Get(expectedEbpfEntry.AsBytes())
@@ -2955,9 +2948,7 @@ var _ = Describe("BPF Endpoint Manager", func() {
 		It("should remove prefix from the map upon removal", func() {
 			// the following prefix should be removed from the map once WLUpdateEpRemove runs
 			genWLUpdateEpRemove("cali12345")()
-
 			ifindex := bpfEpMgr.nameToIface[ifaceName].info.ifIndex
-
 			expectedEntry := allowsources.NewKey(cidr, ifindex)
 			value, err := bpfEpMgr.v4.AllowSourcesMap.Get(expectedEntry.AsBytes())
 			Expect(err).To(HaveOccurred())
@@ -2975,7 +2966,6 @@ var _ = Describe("BPF Endpoint Manager", func() {
 		JustBeforeEach(func() {
 			ifaceName = "cali12345"
 			cidrString = "2001:db8::1/128"
-
 			newBpfEpMgr(true) // Enable IPv6
 			genIfaceUpdate("cali12345", ifacemonitor.StateUp, 15)()
 			genWLUpdateWithSpoofedSource("cali12345", []string{cidrString})()
@@ -3026,9 +3016,7 @@ var _ = Describe("BPF Endpoint Manager", func() {
 		It("should remove prefix from the map upon removal", func() {
 			// the following prefix should be removed from the map once WLUpdateEpRemove runs
 			genWLUpdateEpRemove("cali12345")()
-
 			ifindex := bpfEpMgr.nameToIface[ifaceName].info.ifIndex
-
 			expectedEntry := allowsources.NewKeyV6(cidr, ifindex)
 			value, err := bpfEpMgr.v6.AllowSourcesMap.Get(expectedEntry.AsBytes())
 			Expect(err).To(HaveOccurred())
@@ -3036,8 +3024,8 @@ var _ = Describe("BPF Endpoint Manager", func() {
 		})
 	})
 
-    Describe("allowed source prefixes map (dual-stack)", func() {
-        var (
+	Describe("allowed source prefixes map (dual-stack)", func() {
+		var (
 			ifaceName  string
 			cidr       ip.CIDR
 			cidrString string
@@ -3046,7 +3034,6 @@ var _ = Describe("BPF Endpoint Manager", func() {
 		JustBeforeEach(func() {
 			ifaceName = "cali12345"
 			cidrString = "2001:db8::1/128"
-
 			newBpfEpMgr(true) // Enable IPv6
 			genIfaceUpdate("cali12345", ifacemonitor.StateUp, 15)()
 			genWLUpdateWithSpoofedSource("cali12345", []string{cidrString})()
@@ -3056,9 +3043,8 @@ var _ = Describe("BPF Endpoint Manager", func() {
 			Expect(err).NotTo(HaveOccurred())
 		})
 
-        It("should contain allowed source prefixes from annotation", func() {
+		It("should contain allowed source prefixes from annotation", func() {
 			// initial genWLUpdate should add the prefix to the map
-
 			ifindex := bpfEpMgr.nameToIface[ifaceName].info.ifIndex
 			expectedEbpfEntry := allowsources.NewKeyV6(cidr, ifindex)
 			_, err := bpfEpMgr.v6.AllowSourcesMap.Get(expectedEbpfEntry.AsBytes())
@@ -3080,12 +3066,12 @@ var _ = Describe("BPF Endpoint Manager", func() {
 			bookkeepingSet, exists = bpfEpMgr.v6.allowedSourcesPerWorkload[workloadEndpointID]
 			Expect(exists).To(BeTrue())
 			Expect(bookkeepingSet.Len()).To(Equal(1))
-            Expect(bookkeepingSet.Contains("2001:db8::1/128")).To(BeTrue())
+			Expect(bookkeepingSet.Contains("2001:db8::1/128")).To(BeTrue())
 
-            bookkeepingSetV4, exists := bpfEpMgr.v4.allowedSourcesPerWorkload[workloadEndpointID]
-            Expect(exists).To(BeTrue())
-            Expect(bookkeepingSetV4.Len()).To(Equal(1))
-            Expect(bookkeepingSetV4.Contains("192.168.1.10/24")).To(BeTrue())
+			bookkeepingSetV4, exists := bpfEpMgr.v4.allowedSourcesPerWorkload[workloadEndpointID]
+			Expect(exists).To(BeTrue())
+			Expect(bookkeepingSetV4.Len()).To(Equal(1))
+			Expect(bookkeepingSetV4.Contains("192.168.1.10/24")).To(BeTrue())
 
 			// test the case where one of the annotations are removed via genWLUpdate
 			updatedSpoofedSources = []string{"192.168.1.10/24"}
@@ -3095,12 +3081,12 @@ var _ = Describe("BPF Endpoint Manager", func() {
 			Expect(bookkeepingSet.Len()).To(Equal(1))
 			Expect(bookkeepingSet.Contains("192.168.1.10/24")).To(BeTrue())
 
-            bookkeepingSetV6, exists := bpfEpMgr.v6.allowedSourcesPerWorkload[workloadEndpointID]
-            Expect(exists).To(BeTrue())
-            Expect(bookkeepingSetV6.Len()).To(Equal(0))
+			bookkeepingSetV6, exists := bpfEpMgr.v6.allowedSourcesPerWorkload[workloadEndpointID]
+			Expect(exists).To(BeTrue())
+			Expect(bookkeepingSetV6.Len()).To(Equal(0))
 		})
 
-    })
+	})
 })
 
 var _ = Describe("jumpMapAlloc tests", func() {
@@ -3111,7 +3097,7 @@ var _ = Describe("jumpMapAlloc tests", func() {
 	})
 
 	It("should give initial values in order", func() {
-		for i := 0; i < 5; i++ {
+		for i := range 5 {
 			idx, err := jma.Get("test")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(idx).To(Equal(i))

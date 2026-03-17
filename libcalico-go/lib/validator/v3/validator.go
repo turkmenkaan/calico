@@ -19,6 +19,7 @@ import (
 	"net"
 	"reflect"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -30,7 +31,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8svalidation "k8s.io/apimachinery/pkg/util/validation"
 
-	libapi "github.com/projectcalico/calico/libcalico-go/lib/apis/v3"
+	"github.com/projectcalico/calico/libcalico-go/lib/apis/internalapi"
 	calicoconversion "github.com/projectcalico/calico/libcalico-go/lib/backend/k8s/conversion"
 	"github.com/projectcalico/calico/libcalico-go/lib/errors"
 	"github.com/projectcalico/calico/libcalico-go/lib/names"
@@ -143,7 +144,7 @@ var (
 
 // Validate is used to validate the supplied structure according to the
 // registered field and structure validators.
-func Validate(current interface{}) error {
+func Validate(current any) error {
 	// Perform field-only validation first, that way the struct validators can assume
 	// individual fields are valid format.
 	if err := validate.Struct(current); err != nil {
@@ -244,23 +245,24 @@ func init() {
 	registerStructValidator(validate, validateProtoPort, api.ProtoPort{})
 	registerStructValidator(validate, validatePort, numorstring.Port{})
 	registerStructValidator(validate, validateEndpointPort, api.EndpointPort{})
-	registerStructValidator(validate, validateWorkloadEndpointPort, libapi.WorkloadEndpointPort{})
-	registerStructValidator(validate, validateIPNAT, libapi.IPNAT{})
+	registerStructValidator(validate, validateWorkloadEndpointPort, internalapi.WorkloadEndpointPort{})
+	registerStructValidator(validate, validateIPNAT, internalapi.IPNAT{})
 	registerStructValidator(validate, validateICMPFields, api.ICMPFields{})
 	registerStructValidator(validate, validateIPPoolSpec, api.IPPoolSpec{})
-	registerStructValidator(validate, validateNodeSpec, libapi.NodeSpec{})
-	registerStructValidator(validate, validateIPAMConfigSpec, libapi.IPAMConfigSpec{})
+	registerStructValidator(validate, validateNodeSpec, internalapi.NodeSpec{})
+	registerStructValidator(validate, validateIPAMConfigSpec, api.IPAMConfigurationSpec{})
 	registerStructValidator(validate, validateObjectMeta, metav1.ObjectMeta{})
 	registerStructValidator(validate, validateTier, api.Tier{})
 	registerStructValidator(validate, validateHTTPRule, api.HTTPMatch{})
 	registerStructValidator(validate, validateFelixConfigSpec, api.FelixConfigurationSpec{})
-	registerStructValidator(validate, validateWorkloadEndpointSpec, libapi.WorkloadEndpointSpec{})
+	registerStructValidator(validate, validateWorkloadEndpointSpec, internalapi.WorkloadEndpointSpec{})
 	registerStructValidator(validate, validateHostEndpointSpec, api.HostEndpointSpec{})
 	registerStructValidator(validate, validateRule, api.Rule{})
 	registerStructValidator(validate, validateEntityRule, api.EntityRule{})
 	registerStructValidator(validate, validateBGPPeerSpec, api.BGPPeerSpec{})
 	registerStructValidator(validate, validateBGPFilterRuleV4, api.BGPFilterRuleV4{})
 	registerStructValidator(validate, validateBGPFilterRuleV6, api.BGPFilterRuleV6{})
+	registerStructValidator(validate, validateBGPFilterOperation, api.BGPFilterOperation{})
 	registerStructValidator(validate, validateNetworkPolicy, api.NetworkPolicy{})
 	registerStructValidator(validate, validateGlobalNetworkPolicy, api.GlobalNetworkPolicy{})
 	registerStructValidator(validate, validateStagedGlobalNetworkPolicy, api.StagedGlobalNetworkPolicy{})
@@ -272,7 +274,7 @@ func init() {
 	registerStructValidator(validate, validateRouteTableIDRange, api.RouteTableIDRange{})
 	registerStructValidator(validate, validateRouteTableRange, api.RouteTableRange{})
 	registerStructValidator(validate, validateBGPConfigurationSpec, api.BGPConfigurationSpec{})
-	registerStructValidator(validate, validateBlockAffinitySpec, libapi.BlockAffinitySpec{})
+	registerStructValidator(validate, validateBlockAffinitySpec, api.BlockAffinitySpec{})
 	registerStructValidator(validate, validateHealthTimeoutOverride, api.HealthTimeoutOverride{})
 }
 
@@ -286,8 +288,8 @@ func reason(r string) string {
 // extractReason extracts the error reason from the field tag in a validator
 // field error (if there is one).
 func extractReason(e validator.FieldError) string {
-	if strings.HasPrefix(e.Tag(), reasonString) {
-		return strings.TrimPrefix(e.Tag(), reasonString)
+	if after, ok := strings.CutPrefix(e.Tag(), reasonString); ok {
+		return after
 	}
 	return fmt.Sprintf("%sfailed to validate Field: %s because of Tag: %s ",
 		reasonString,
@@ -302,7 +304,7 @@ func registerFieldValidator(key string, fn validator.Func) {
 	validate.RegisterValidation(key, fn)
 }
 
-func registerStructValidator(validator *validator.Validate, fn validator.StructLevelFunc, t ...interface{}) {
+func registerStructValidator(validator *validator.Validate, fn validator.StructLevelFunc, t ...any) {
 	validator.RegisterStructValidation(fn, t...)
 }
 
@@ -797,7 +799,7 @@ func validateKeyValueList(fl validator.FieldLevel) bool {
 		return true
 	}
 
-	for _, item := range strings.Split(n, ",") {
+	for item := range strings.SplitSeq(n, ",") {
 		if item == "" {
 			// Accept empty items (e.g tailing ",")
 			continue
@@ -924,7 +926,7 @@ func validatePort(structLevel validator.StructLevel) {
 }
 
 func validateIPNAT(structLevel validator.StructLevel) {
-	i := structLevel.Current().Interface().(libapi.IPNAT)
+	i := structLevel.Current().Interface().(internalapi.IPNAT)
 	log.Debugf("Internal IP: %s; External IP: %s", i.InternalIP, i.ExternalIP)
 
 	iip, _, err := cnet.ParseCIDROrIP(i.InternalIP)
@@ -1033,7 +1035,7 @@ func validateFelixConfigSpec(structLevel validator.StructLevel) {
 }
 
 func validateWorkloadEndpointSpec(structLevel validator.StructLevel) {
-	w := structLevel.Current().Interface().(libapi.WorkloadEndpointSpec)
+	w := structLevel.Current().Interface().(internalapi.WorkloadEndpointSpec)
 
 	// The configured networks only support /32 (for IPv4) and /128 (for IPv6) at present.
 	for _, netw := range w.IPNetworks {
@@ -1246,13 +1248,7 @@ func validateIPPoolSpec(structLevel validator.StructLevel) {
 	}
 
 	// Check for invalid combination: Tunnel allowedUse with namespaceSelector
-	hasTunnelUse := false
-	for _, use := range pool.AllowedUses {
-		if use == api.IPPoolAllowedUseTunnel {
-			hasTunnelUse = true
-			break
-		}
-	}
+	hasTunnelUse := slices.Contains(pool.AllowedUses, api.IPPoolAllowedUseTunnel)
 
 	if hasTunnelUse && pool.NamespaceSelector != "" {
 		structLevel.ReportError(reflect.ValueOf(pool.NamespaceSelector),
@@ -1261,7 +1257,6 @@ func validateIPPoolSpec(structLevel validator.StructLevel) {
 
 	// Enhanced validation for NodeSelector based on Calico selector reference
 	if pool.NodeSelector != "" {
-
 		// Check for invalid global() selector in nodeSelector context
 		if strings.Contains(pool.NodeSelector, "global(") {
 			structLevel.ReportError(reflect.ValueOf(pool.NodeSelector),
@@ -1271,13 +1266,11 @@ func validateIPPoolSpec(structLevel validator.StructLevel) {
 
 	// Enhanced validation for NamespaceSelector based on Calico selector reference
 	if pool.NamespaceSelector != "" {
-
 		// Check for invalid global() selector in namespaceSelector context
 		if strings.Contains(pool.NamespaceSelector, "global(") {
 			structLevel.ReportError(reflect.ValueOf(pool.NamespaceSelector),
 				"IPpool.NamespaceSelector", "", reason("global() selector is not valid for IPPool namespaceSelector - use all() instead"), "")
 		}
-
 	}
 }
 
@@ -1460,7 +1453,7 @@ func validateEntityRule(structLevel validator.StructLevel) {
 }
 
 func validateIPAMConfigSpec(structLevel validator.StructLevel) {
-	ics := structLevel.Current().Interface().(libapi.IPAMConfigSpec)
+	ics := structLevel.Current().Interface().(api.IPAMConfigurationSpec)
 
 	if ics.MaxBlocksPerHost < 0 {
 		structLevel.ReportError(reflect.ValueOf(ics.MaxBlocksPerHost), "MaxBlocksPerHost", "",
@@ -1469,10 +1462,10 @@ func validateIPAMConfigSpec(structLevel validator.StructLevel) {
 }
 
 func validateNodeSpec(structLevel validator.StructLevel) {
-	ns := structLevel.Current().Interface().(libapi.NodeSpec)
+	ns := structLevel.Current().Interface().(internalapi.NodeSpec)
 
 	if ns.BGP != nil {
-		if reflect.DeepEqual(*ns.BGP, libapi.NodeBGPSpec{}) {
+		if reflect.DeepEqual(*ns.BGP, internalapi.NodeBGPSpec{}) {
 			structLevel.ReportError(reflect.ValueOf(ns.BGP), "BGP", "",
 				reason("Spec.BGP should not be empty"), "")
 		}
@@ -1592,6 +1585,24 @@ func validateBGPFilterRule(
 	}
 }
 
+func validateBGPFilterOperation(structLevel validator.StructLevel) {
+	op := structLevel.Current().Interface().(api.BGPFilterOperation)
+	count := 0
+	if op.AddCommunity != nil {
+		count++
+	}
+	if op.PrependASPath != nil {
+		count++
+	}
+	if op.SetPriority != nil {
+		count++
+	}
+	if count != 1 {
+		structLevel.ReportError(op, "BGPFilterOperation", "",
+			reason("exactly one operation must be set"), "")
+	}
+}
+
 func validateEndpointPort(structLevel validator.StructLevel) {
 	port := structLevel.Current().Interface().(api.EndpointPort)
 
@@ -1607,7 +1618,7 @@ func validateEndpointPort(structLevel validator.StructLevel) {
 }
 
 func validateWorkloadEndpointPort(structLevel validator.StructLevel) {
-	port := structLevel.Current().Interface().(libapi.WorkloadEndpointPort)
+	port := structLevel.Current().Interface().(internalapi.WorkloadEndpointPort)
 
 	if !port.Protocol.SupportsPorts() {
 		structLevel.ReportError(
@@ -2309,8 +2320,8 @@ func validateBGPConfigurationSpec(structLevel validator.StructLevel) {
 }
 
 func validateBlockAffinitySpec(structLevel validator.StructLevel) {
-	spec := structLevel.Current().Interface().(libapi.BlockAffinitySpec)
-	if spec.Deleted == fmt.Sprintf("%t", true) {
+	spec := structLevel.Current().Interface().(api.BlockAffinitySpec)
+	if spec.Deleted {
 		structLevel.ReportError(reflect.ValueOf(spec), "Spec.Deleted", "", reason("spec.Deleted cannot be set to \"true\""), "")
 	}
 }

@@ -25,14 +25,14 @@ import (
 var product = utils.ProductName
 
 // AnnounceHashrelease sends a slack notification for a new hashrelease.
-func AnnounceHashrelease(cfg *slack.Config, hashrel *hashreleaseserver.Hashrelease, ciURL string) error {
+func AnnounceHashrelease(cfg *slack.Config, hashrel *hashreleaseserver.Hashrelease, ciURL string) (*slack.MessageResponse, error) {
 	logrus.WithField("hashrelease", hashrel.Name).Info("Sending hashrelease announcement to Slack")
 	msgData := &slack.HashreleaseMessageData{
 		ReleaseName:        hashrel.Name,
 		Product:            product,
 		Stream:             hashrel.Stream,
 		ProductVersion:     hashrel.ProductVersion,
-		OperatorVersion:    hashrel.OperatorVersion,
+		OperatorVersion:    hashrel.Operator.Version,
 		ReleaseType:        "hashrelease",
 		CIURL:              ciURL,
 		DocsURL:            hashrel.URL(),
