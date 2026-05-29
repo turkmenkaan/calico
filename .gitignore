@@ -1,5 +1,6 @@
 *.created*
 *.pyc
+.dev-stamps/
 .go-pkg-cache/
 .idea
 .vscode
@@ -24,8 +25,12 @@ builder.coverprofile
 *.pprof
 .release-*.*
 
+/* Docker image tarballs */
+image.tar
+
 /* Image build stamp files for kind testing */
 .stamp.*
+hack/test/kind/infra/operator
 
 /* Created by local kind cluster */
 hack/test/kind/kind
@@ -41,3 +46,8 @@ pod2daemon/node-driver-registrar/
 
 /* Created by libcalico-go UTs */
 ut-tmp-dir
+
+.remember
+
+# Build-time copy of metadata.mk for the release CLI's embedded defaults.
+release/internal/defaults/metadata.mk

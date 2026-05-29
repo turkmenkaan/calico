@@ -99,7 +99,7 @@ Description:
 
 	// Get a kube-client. If this is a kdd cluster, we can pull this from the backend.
 	// Otherwise, we need to build one ourselves.
-	var kubeClient *kubernetes.Clientset
+	var kubeClient kubernetes.Interface
 	if kc, ok := bc.(*k8s.KubeClient); ok {
 		// Pull from the kdd client.
 		kubeClient = kc.ClientSet
@@ -135,7 +135,7 @@ Description:
 
 	// Build the checker.
 	checker := NewIPAMChecker(kubeClient, client, bc, showAllIPs, showProblemIPs, outFile, version)
-	return checker.checkIPAM(ctx)
+	return checker.CheckIPAM(ctx)
 }
 
 func NewIPAMChecker(k8sClient kubernetes.Interface,
@@ -190,7 +190,7 @@ type IPAMChecker struct {
 	outFile string
 }
 
-func (c *IPAMChecker) checkIPAM(ctx context.Context) error {
+func (c *IPAMChecker) CheckIPAM(ctx context.Context) error {
 	fmt.Println("Checking IPAM for inconsistencies...")
 	fmt.Println()
 

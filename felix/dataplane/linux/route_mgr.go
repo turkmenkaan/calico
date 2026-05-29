@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2025 Tigera, Inc. All rights reserved.
+// Copyright (c) 2016-2026 Tigera, Inc. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -132,28 +132,17 @@ func calculateRouteProtocol(dpConfig Config) netlink.RouteProtocol {
 // isRemoteTunnelRoute returns true if the route update signifies a need to program
 // a directly connected route on the VXLAN/IPIP device for a remote tunnel endpoint. This is needed
 // in a few cases in order to ensure host <-> pod connectivity over the tunnel.
+// This happens when tunnel addresses are selected from an IP pool with blocks of a single address.
 func isRemoteTunnelRoute(msg *proto.RouteUpdate, ippoolType proto.IPPoolType) bool {
-	if msg.IpPoolType != ippoolType {
-		// Not relevant IP pool - can skip this update.
-		return false
-	}
+	return msg.IpPoolType == ippoolType && // Ignore irrelevant messages.
+		isType(msg, proto.RouteType_REMOTE_TUNNEL) && isType(msg, proto.RouteType_REMOTE_WORKLOAD)
+}
 
-	var isRemoteTunnel bool
-	var isBlock bool
-	isRemoteTunnel = isType(msg, proto.RouteType_REMOTE_TUNNEL)
-	isBlock = isType(msg, proto.RouteType_REMOTE_WORKLOAD)
-
-	if isRemoteTunnel && msg.Borrowed {
-		// If we receive a route for a borrowed tunnel IP, we need to make sure to program a route for it as it
-		// won't be covered by the block route.
-		return true
-	}
-	if isRemoteTunnel && isBlock {
-		// This happens when tunnel addresses are selected from an IP pool with blocks of a single address.
-		// These also need routes of the form "<IP> dev vxlan.calico" rather than "<block> via <TunnelEndpoint>".
-		return true
-	}
-	return false
+// If we receive a route for a borrowed tunnel IP, we need to make sure to program a route for it as it
+// won't be covered by the block route.
+func isBorrowedRoute(msg *proto.RouteUpdate, ippoolType proto.IPPoolType) bool {
+	return msg.IpPoolType == ippoolType && // Ignore irrelevant messages.
+		isType(msg, proto.RouteType_REMOTE_TUNNEL) && msg.Borrowed
 }
 
 func (m *routeManager) OnUpdate(protoBufMsg any) {
@@ -183,6 +172,12 @@ func (m *routeManager) OnUpdate(protoBufMsg any) {
 
 		if isRemoteTunnelRoute(msg, m.ippoolType) {
 			m.logCtx.WithField("msg", msg).Debug("Route manager received route update for remote tunnel endpoint")
+			m.routesByDest[msg.Dst] = msg
+			m.routesDirty = true
+		}
+
+		if isBorrowedRoute(msg, m.ippoolType) {
+			m.logCtx.WithField("msg", msg).Debug("Route manager received route update for a borrowed address")
 			m.routesByDest[msg.Dst] = msg
 			m.routesDirty = true
 		}
@@ -439,7 +434,11 @@ func (m *routeManager) detectParentIface() (netlink.Link, error) {
 		return nil, fmt.Errorf("parent interface not yet known")
 	}
 
-	m.logCtx.WithField("address", parentAddr).Debug("Getting parent interface")
+	// Keep only the address, and remove subnet mask part if there is any.
+	parts := strings.Split(parentAddr, "/")
+	normalisedAddr := parts[0]
+
+	m.logCtx.WithField("address", normalisedAddr).Debug("Getting parent interface")
 	links, err := m.nlHandle.LinkList()
 	if err != nil {
 		return nil, err
@@ -457,13 +456,13 @@ func (m *routeManager) detectParentIface() (netlink.Link, error) {
 		}
 		for _, addr := range addrs {
 			// Match address with or without subnet mask
-			if addr.IP.String() == parentAddr || addr.IPNet.String() == parentAddr {
+			if addr.IP.String() == normalisedAddr {
 				m.logCtx.Debugf("Found parent interface: %+v", link)
 				return link, nil
 			}
 		}
 	}
-	return nil, fmt.Errorf("unable to find parent interface with address %s", parentAddr)
+	return nil, fmt.Errorf("unable to find parent interface with address %s", normalisedAddr)
 }
 
 // KeepDeviceInSync runs in a loop and checks that the device is still correctly configured, and updates it if necessary.

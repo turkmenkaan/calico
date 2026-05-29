@@ -60,13 +60,12 @@ type L3RouteResolver struct {
 
 	// Store node metadata indexed by node name, and routes by the
 	// block that contributed them.
-	nodeNameToNodeInfo     map[string]l3rrNodeInfo
-	blockToRoutes          map[string]set.Set[nodenameRoute]
-	nodeRoutes             nodeRoutes
-	allPools               map[string]l3rrPoolInfo
-	workloadIDToCIDRs      map[model.WorkloadEndpointKey][]cnet.IPNet
-	useNodeResourceUpdates bool
-	routeSource            string
+	nodeNameToNodeInfo map[string]l3rrNodeInfo
+	blockToRoutes      map[string]set.Set[nodenameRoute]
+	nodeRoutes         nodeRoutes
+	allPools           map[string]l3rrPoolInfo
+	workloadIDToCIDRs  map[model.WorkloadEndpointKey][]cnet.IPNet
+	routeSource        string
 
 	OnAlive        func()
 	lastLiveReport time.Time
@@ -170,7 +169,7 @@ func (i l3rrNodeInfo) AddressesAsCIDRs() []ip.CIDR {
 	return cidrs
 }
 
-func NewL3RouteResolver(hostname string, callbacks routeCallbacks, useNodeResourceUpdates bool, routeSource string) *L3RouteResolver {
+func NewL3RouteResolver(hostname string, callbacks routeCallbacks, routeSource string) *L3RouteResolver {
 	logrus.Info("Creating L3 route resolver")
 	l3rr := &L3RouteResolver{
 		myNodeName: hostname,
@@ -178,27 +177,19 @@ func NewL3RouteResolver(hostname string, callbacks routeCallbacks, useNodeResour
 
 		trie: NewRouteTrie(),
 
-		nodeNameToNodeInfo:     map[string]l3rrNodeInfo{},
-		blockToRoutes:          map[string]set.Set[nodenameRoute]{},
-		allPools:               map[string]l3rrPoolInfo{},
-		workloadIDToCIDRs:      map[model.WorkloadEndpointKey][]cnet.IPNet{},
-		useNodeResourceUpdates: useNodeResourceUpdates,
-		routeSource:            routeSource,
-		nodeRoutes:             newNodeRoutes(),
+		nodeNameToNodeInfo: map[string]l3rrNodeInfo{},
+		blockToRoutes:      map[string]set.Set[nodenameRoute]{},
+		allPools:           map[string]l3rrPoolInfo{},
+		workloadIDToCIDRs:  map[model.WorkloadEndpointKey][]cnet.IPNet{},
+		routeSource:        routeSource,
+		nodeRoutes:         newNodeRoutes(),
 	}
 	l3rr.trie.OnAlive = l3rr.maybeReportLive
 	return l3rr
 }
 
 func (c *L3RouteResolver) RegisterWith(allUpdDispatcher, localDispatcher *dispatcher.Dispatcher) {
-	if c.useNodeResourceUpdates {
-		logrus.Info("Registering L3 route resolver (node resources on)")
-		allUpdDispatcher.Register(model.ResourceKey{}, c.OnResourceUpdate)
-	} else {
-		logrus.Info("Registering L3 route resolver (node resources off)")
-		allUpdDispatcher.Register(model.HostIPKey{}, c.OnHostIPUpdate)
-	}
-
+	allUpdDispatcher.Register(model.ResourceKey{}, c.OnResourceUpdate)
 	allUpdDispatcher.Register(model.IPPoolKey{}, c.OnPoolUpdate)
 
 	// Depending on if we're using workload endpoints for routing information, we may
@@ -437,30 +428,6 @@ func (c *L3RouteResolver) OnResourceUpdate(update api.Update) (_ bool) {
 	}
 
 	c.onNodeUpdate(nodeName, nodeInfo)
-
-	return
-}
-
-// OnHostIPUpdate gets called whenever a node IP address changes.
-func (c *L3RouteResolver) OnHostIPUpdate(update api.Update) (_ bool) {
-	// Queue up a flush.
-	defer c.flush()
-
-	nodeName := update.Key.(model.HostIPKey).Hostname
-	logrus.WithField("node", nodeName).Debug("OnHostIPUpdate triggered")
-
-	var newNodeInfo *l3rrNodeInfo
-	if update.Value != nil {
-		newCaliIP := update.Value.(*cnet.IP)
-		v4Addr, ok := ip.FromCalicoIP(*newCaliIP).(ip.V4Addr)
-		if ok { // Defensive; we only expect an IPv4.
-			newNodeInfo = &l3rrNodeInfo{
-				V4Addr: v4Addr,
-				V4CIDR: v4Addr.AsCIDR().(ip.V4CIDR), // Don't know the CIDR so use the /32.
-			}
-		}
-	}
-	c.onNodeUpdate(nodeName, newNodeInfo)
 
 	return
 }
@@ -747,6 +714,9 @@ func (c *L3RouteResolver) flush() {
 		poolAllowsCrossSubnet := false
 		var blockSeen bool
 		var blockNodeName string
+		var blockTypes proto.RouteType
+		var blockMatchesRoute bool
+		var hasTunnelRef bool
 		for _, entry := range buf {
 			ri := entry.Data.(RouteInfo)
 			if len(ri.Pools) > 0 {
@@ -774,12 +744,24 @@ func (c *L3RouteResolver) flush() {
 					blockNodeName = ri.Blocks[0].NodeName
 				}
 				rt.DstNodeName = ri.Blocks[0].NodeName
-				if rt.DstNodeName == c.myNodeName {
-					logCxt.Debug("Local workload route.")
-					rt.Types |= proto.RouteType_LOCAL_WORKLOAD
+
+				// Track whether this block entry is at the same CIDR as the route we're
+				// resolving (e.g., a /32 block for a /32 tunnel IP from a dedicated tunnel
+				// pool) vs a parent block that merely contains it.
+				if entry.CIDR == cidr {
+					blockMatchesRoute = true
+				}
+
+				// Accumulate the workload type flags from block entries, but don't apply
+				// them to the route yet. A parent block entry (e.g., a /26 block containing
+				// a /32 tunnel IP) should not contribute REMOTE_WORKLOAD to a tunnel route.
+				// The flags are applied after the full trie walk; see below.
+				if ri.Blocks[0].NodeName == c.myNodeName {
+					logCxt.Debug("Local workload route (from block).")
+					blockTypes |= proto.RouteType_LOCAL_WORKLOAD
 				} else {
-					logCxt.Debug("Remote workload route.")
-					rt.Types |= proto.RouteType_REMOTE_WORKLOAD
+					logCxt.Debug("Remote workload route (from block).")
+					blockTypes |= proto.RouteType_REMOTE_WORKLOAD
 				}
 			}
 			if len(ri.Host.NodeNames) > 0 {
@@ -819,6 +801,7 @@ func (c *L3RouteResolver) flush() {
 				} else {
 					// This is a tunnel ref, set type and also store the tunnel type in the route. It is possible for
 					// multiple tunnels to have the same IP, so collate all tunnel types on the same node.
+					hasTunnelRef = true
 					if ri.Refs[0].NodeName == c.myNodeName {
 						rt.Types |= proto.RouteType_LOCAL_TUNNEL
 					} else {
@@ -843,6 +826,18 @@ func (c *L3RouteResolver) flush() {
 					}
 				}
 			}
+		}
+
+		// Apply the accumulated block workload type flags unless the route is a tunnel
+		// IP that merely falls within a parent block. A tunnel IP inside a larger block
+		// (e.g., a /32 inside a /26) should not get REMOTE_WORKLOAD — that causes
+		// isRemoteTunnelRoute() in the route manager to program a spurious /32 route.
+		//
+		// However, if the block is at the same CIDR as the route (e.g., a /32 block from
+		// a dedicated tunnel pool), the workload type is still needed so the route manager
+		// programs the correct directly-connected route.
+		if blockSeen && (!hasTunnelRef || blockMatchesRoute) {
+			rt.Types |= blockTypes
 		}
 
 		var ipFamily int

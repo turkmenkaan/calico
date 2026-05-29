@@ -137,6 +137,8 @@ var nonGoDeps = map[string][]string{
 		// Root-level Makefile is used to build operator and other images,
 		// used by the STs.
 		"/Makefile",
+		// Kind cluster test infrastructure (scripts, helm values, configs).
+		"/hack/test/kind",
 	},
 
 	"e2e": {
@@ -699,7 +701,7 @@ func buildSemaphoreYAML(file string, templates []templateData, globalExtraDeps [
 		_, _ = data.WriteString(content)
 	}
 
-	return os.WriteFile(file, data.Bytes(), 0644)
+	return os.WriteFile(file, []byte(convertToFoldedScalars(data.String())), 0644)
 }
 
 func indentBlocks(blocks []templateData) []templateData {
@@ -818,42 +820,48 @@ func calculateDefaultBranch(semaphoreDir string) (string, error) {
 		return branch, nil
 	}
 
-	if branch := os.Getenv("SEMAPHORE_GIT_BRANCH"); branch != "" {
-		// In CI, this env var is set either to the current branch, if we're
-		// building on a branch, or to the target branch if we're building
-		// a PR.
-		logrus.Infof("Using SEMAPHORE_GIT_BRANCH for default branch: %s", branch)
-		return branch, nil
-	}
-
-	// Fallback to git.
-	out, err := exec.Command("git", "branch", "--show-current").Output()
-	if err != nil {
-		return "", fmt.Errorf("git branch --show-current failed: %w", err)
-	}
-	branch := strings.TrimSpace(string(out))
-
-	if branch == mainBranchName {
-		logrus.Info("On master branch, using that for default branch.")
-		return branch, nil
-	}
-
-	// Check for release branch.
 	releaseBranchPrefix := os.Getenv("RELEASE_BRANCH_PREFIX")
 	if releaseBranchPrefix == "" {
 		return "", fmt.Errorf("RELEASE_BRANCH_PREFIX not set")
 	}
 	releaseBranchRegexp := regexp.MustCompile(`^` + regexp.QuoteMeta(releaseBranchPrefix) + `-v[\d.-]+$`)
-	if s := releaseBranchRegexp.FindString(branch); s != "" {
-		// Explicitly on a release branch, so use that.
-		logrus.Infof("On release branch %s, using that for default branch.", s)
-		return s, nil
+
+	// In CI, SEMAPHORE_GIT_BRANCH is set either to the current branch, if
+	// we're building on a branch, or to the target branch if we're building
+	// a PR. For stacked PRs (PR2 targets PR1's branch), the target branch
+	// can be a non-master, non-release branch — ignore those and fall
+	// through to detecting the default from the existing semaphore.yml.
+	if branch := os.Getenv("SEMAPHORE_GIT_BRANCH"); branch != "" {
+		if branch == mainBranchName || releaseBranchRegexp.MatchString(branch) {
+			logrus.Infof("Using SEMAPHORE_GIT_BRANCH for default branch: %s", branch)
+			return branch, nil
+		}
+		logrus.Infof("SEMAPHORE_GIT_BRANCH %q is not master or a release branch, ignoring.", branch)
+	} else {
+		// Fallback to git.
+		out, err := exec.Command("git", "branch", "--show-current").Output()
+		if err != nil {
+			return "", fmt.Errorf("git branch --show-current failed: %w", err)
+		}
+		branch := strings.TrimSpace(string(out))
+
+		if branch == mainBranchName {
+			logrus.Info("On master branch, using that for default branch.")
+			return branch, nil
+		}
+
+		if s := releaseBranchRegexp.FindString(branch); s != "" {
+			// Explicitly on a release branch, so use that.
+			logrus.Infof("On release branch %s, using that for default branch.", s)
+			return s, nil
+		}
+		logrus.Infof("Branch %q is not master or a release branch.", branch)
 	}
 
 	// If we're not on a release branch, this is likely to be a PR build,
 	// and the semaphore.yml should have inherited the default from whichever
 	// branch it was based on.  Check there.
-	logrus.Infof("Branch %q is not a release branch, checking semaphore.yml for default branch.", branch)
+	logrus.Infof("Checking semaphore.yml for default branch.")
 	detected, err := detectExistingDefaultBranch(filepath.Join(semaphoreDir, "semaphore.yml"))
 	if err != nil {
 		return "", fmt.Errorf("detect release branch from semaphore yaml: %w", err)
@@ -865,6 +873,47 @@ func calculateDefaultBranch(semaphoreDir string) (string, error) {
 
 	logrus.Info("Found no default branch in semaphore.yml, assuming master.")
 	return mainBranchName, nil
+}
+
+// convertToFoldedScalars post-processes generated YAML content to convert
+// long when: "change_in(...)" lines into YAML folded block scalars (>-),
+// with each dependency path on its own line. This makes diffs cleaner and
+// reduces merge conflicts. The >- scalar folds newlines into spaces when
+// parsed, so the resulting value is semantically identical.
+func convertToFoldedScalars(content string) string {
+	lines := strings.Split(content, "\n")
+	var result []string
+	for _, line := range lines {
+		trimmed := strings.TrimRight(line, " \t")
+		if converted, ok := tryConvertWhenToFolded(trimmed); ok {
+			result = append(result, converted...)
+		} else {
+			result = append(result, line)
+		}
+	}
+	return strings.Join(result, "\n")
+}
+
+func tryConvertWhenToFolded(line string) ([]string, bool) {
+	idx := strings.Index(line, `when: "`)
+	if idx < 0 || !strings.Contains(line, "change_in(") || !strings.HasSuffix(line, `)"`) {
+		return nil, false
+	}
+
+	indent := line[:idx]
+	expr := line[idx+len(`when: "`) : len(line)-1]
+	contentIndent := indent + "  "
+
+	// Put each list item on its own line.
+	multiline := strings.ReplaceAll(expr, "','", "',\n"+contentIndent+"'")
+	// Put the options dict on its own line.
+	multiline = strings.ReplaceAll(multiline, "], {", "],\n"+contentIndent+"{")
+
+	fullMultiline := contentIndent + multiline
+	foldedLines := strings.Split(fullMultiline, "\n")
+	result := []string{indent + "when: >-"}
+	result = append(result, foldedLines...)
+	return result, true
 }
 
 func detectExistingDefaultBranch(path string) (string, error) {

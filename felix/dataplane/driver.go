@@ -1,4 +1,4 @@
-// Copyright (c) 2020-2025 Tigera, Inc. All rights reserved.
+// Copyright (c) 2020-2026 Tigera, Inc. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -55,6 +55,7 @@ import (
 	"github.com/projectcalico/calico/felix/rules"
 	"github.com/projectcalico/calico/felix/wireguard"
 	"github.com/projectcalico/calico/libcalico-go/lib/health"
+	"github.com/projectcalico/calico/libcalico-go/lib/ipam"
 )
 
 func StartDataplaneDriver(
@@ -63,8 +64,9 @@ func StartDataplaneDriver(
 	collector collector.Collector,
 	configChangedRestartCallback func(),
 	fatalErrorCallback func(error),
-	k8sClientSet *kubernetes.Clientset,
+	k8sClientSet kubernetes.Interface,
 	lc *calc.LookupsCache,
+	ipamClient ipam.Interface,
 ) (DataplaneDriver, *exec.Cmd) {
 	if !configParams.IsLeader() {
 		// Return an inactive dataplane, since we're not the leader.
@@ -336,6 +338,7 @@ func StartDataplaneDriver(
 			DeviceRouteProtocol:            netlink.RouteProtocol(configParams.DeviceRouteProtocol),
 			RemoveExternalRoutes:           configParams.RemoveExternalRoutes,
 			ProgramClusterRoutes:           configParams.ProgramClusterRoutesEnabled(),
+			NoEncapEnabled:                 configParams.Encapsulation.NoEncapEnabled,
 			IPForwarding:                   configParams.IPForwarding,
 			IPSetsRefreshInterval:          configParams.IpsetsRefreshInterval,
 			IptablesPostWriteCheckInterval: configParams.IptablesPostWriteCheckIntervalSecs,
@@ -345,6 +348,7 @@ func StartDataplaneDriver(
 			IPv6Enabled:                    configParams.Ipv6Support,
 			BPFIpv6Enabled:                 configParams.Ipv6Support && configParams.BPFEnabled,
 			BPFHostConntrackBypass:         configParams.BPFHostConntrackBypass,
+			BPFIPFragmentReassemblyEnabled: configParams.BPFIPFragmentReassemblyEnabled,
 			StatusReportingInterval:        configParams.ReportingIntervalSecs,
 			XDPRefreshInterval:             configParams.XDPRefreshInterval,
 
@@ -414,6 +418,7 @@ func StartDataplaneDriver(
 			BPFRedirectToPeer:                  configParams.BPFRedirectToPeer,
 			BPFAttachType:                      configParams.GetBPFAttachType(),
 			BPFProfiling:                       configParams.BPFProfiling,
+			BPFIPFragTimeout:                   configParams.BPFIPFragTimeout,
 			ServiceLoopPrevention:              configParams.ServiceLoopPrevention,
 
 			KubeClientSet: k8sClientSet,
@@ -429,6 +434,8 @@ func StartDataplaneDriver(
 			IPv6ElevatedRoutePriority: configParams.IPv6ElevatedRoutePriority,
 
 			LiveMigrationRouteConvergenceTime: configParams.LiveMigrationRouteConvergenceTime,
+
+			IPAMClient: ipamClient,
 
 			KubernetesProvider: configParams.KubernetesProvider(),
 			Collector:          collector,
